@@ -4,201 +4,358 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>My Affirmation Reading Page</title>
+  <title>Affirmation Reading Page</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --dark-green: #071c16;
+      --deep-green: #0b2d23;
+      --forest-green: #124234;
+      --soft-green: #1f5c49;
+      --sage: #9fb8a7;
+      --cream: #f5efe2;
+      --gold: #d7b46a;
+      --muted-gold: #bfa25d;
+      --glass: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.14);
+      --text-light: #f8f3e8;
+      --text-muted: #c8d2c9;
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: "Inter", "Segoe UI", Arial, sans-serif;
     }
 
     body {
       min-height: 100vh;
+      font-family: "Inter", sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(255, 214, 224, 0.75), transparent 34%),
-        radial-gradient(circle at bottom right, rgba(247, 197, 175, 0.55), transparent 32%),
-        linear-gradient(135deg, #fff8f4, #f8e8ef, #f6f8fb);
-      color: #2f2f2f;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 30px;
+        radial-gradient(circle at 15% 10%, rgba(43, 119, 88, 0.45), transparent 32%),
+        radial-gradient(circle at 85% 80%, rgba(215, 180, 106, 0.18), transparent 30%),
+        linear-gradient(135deg, var(--dark-green), var(--deep-green), #03110d);
+      color: var(--text-light);
+      overflow-x: hidden;
+      padding: 34px;
+      position: relative;
     }
 
-    .page-wrapper {
-      width: 100%;
-      max-width: 1120px;
-      min-height: 700px;
-      background: rgba(255, 255, 255, 0.86);
-      backdrop-filter: blur(18px);
-      border-radius: 34px;
-      box-shadow: 0 30px 90px rgba(95, 54, 70, 0.16);
+    .background-animation {
+      position: fixed;
+      inset: 0;
       overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(2px);
+      opacity: 0.35;
+      animation: floatOrb 12s ease-in-out infinite alternate;
+    }
+
+    .orb-one {
+      width: 170px;
+      height: 170px;
+      background: rgba(31, 92, 73, 0.55);
+      top: 12%;
+      left: 7%;
+    }
+
+    .orb-two {
+      width: 120px;
+      height: 120px;
+      background: rgba(215, 180, 106, 0.24);
+      bottom: 12%;
+      right: 10%;
+      animation-delay: 2s;
+    }
+
+    .orb-three {
+      width: 90px;
+      height: 90px;
+      background: rgba(159, 184, 167, 0.22);
+      top: 55%;
+      left: 4%;
+      animation-delay: 4s;
+    }
+
+    @keyframes floatOrb {
+      from {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+
+      to {
+        transform: translate3d(22px, -28px, 0) scale(1.08);
+      }
+    }
+
+    .page-shell {
+      width: 100%;
+      max-width: 1180px;
+      min-height: calc(100vh - 68px);
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
       display: grid;
       grid-template-columns: 0.9fr 1.35fr;
-      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 34px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 35px 90px rgba(0, 0, 0, 0.38);
+      backdrop-filter: blur(22px);
     }
 
     .left-panel {
+      position: relative;
+      padding: 56px 44px;
       background:
-        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.28), transparent 26%),
-        linear-gradient(160deg, #c98291, #e8b3a6, #f6d9b9);
-      padding: 52px 42px;
+        linear-gradient(160deg, rgba(18, 66, 52, 0.96), rgba(7, 28, 22, 0.98)),
+        radial-gradient(circle at top left, rgba(215, 180, 106, 0.18), transparent 38%);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      color: #fff;
-      position: relative;
       overflow: hidden;
     }
 
     .left-panel::before {
       content: "";
       position: absolute;
-      width: 250px;
-      height: 250px;
-      border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.32);
-      top: -70px;
-      right: -90px;
+      width: 260px;
+      height: 260px;
+      border: 1px solid rgba(215, 180, 106, 0.22);
+      border-radius: 999px;
+      top: -90px;
+      right: -100px;
     }
 
     .left-panel::after {
       content: "";
       position: absolute;
-      width: 210px;
-      height: 210px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.18);
-      bottom: -60px;
-      left: -65px;
+      width: 190px;
+      height: 190px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      bottom: -70px;
+      left: -60px;
     }
 
-    .brand-label {
-      font-size: 13px;
-      letter-spacing: 2.2px;
-      text-transform: uppercase;
-      font-weight: 700;
-      opacity: 0.92;
+    .brand-line {
       position: relative;
       z-index: 2;
-    }
-
-    .left-content {
-      position: relative;
-      z-index: 2;
-    }
-
-    .left-content h1 {
-      font-size: 46px;
-      line-height: 1.08;
-      margin-bottom: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--gold);
+      font-size: 12px;
       font-weight: 800;
-      letter-spacing: -1.2px;
+      letter-spacing: 2.4px;
+      text-transform: uppercase;
     }
 
-    .left-content p {
+    .brand-line span {
+      width: 34px;
+      height: 1px;
+      background: var(--gold);
+      display: inline-block;
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 2;
+      margin-top: 80px;
+    }
+
+    .hero-copy h1 {
+      font-family: "Fraunces", serif;
+      font-size: clamp(42px, 5vw, 68px);
+      line-height: 0.98;
+      letter-spacing: -1.5px;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    .hero-copy p {
+      max-width: 380px;
+      color: var(--text-muted);
       font-size: 16px;
       line-height: 1.75;
-      opacity: 0.94;
-      max-width: 350px;
     }
 
-    .daily-note {
-      font-size: 14px;
-      line-height: 1.6;
-      opacity: 0.92;
+    .ritual-card {
       position: relative;
       z-index: 2;
-      max-width: 330px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-radius: 26px;
+      padding: 24px;
+      margin-top: 54px;
     }
 
-    .main-content {
-      padding: 56px;
+    .ritual-card h3 {
+      font-size: 15px;
+      color: var(--gold);
+      margin-bottom: 10px;
+      letter-spacing: 0.4px;
+    }
+
+    .ritual-card p {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .main-panel {
+      padding: 54px;
+      background:
+        linear-gradient(160deg, rgba(245, 239, 226, 0.09), rgba(255, 255, 255, 0.04)),
+        rgba(7, 28, 22, 0.72);
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 26px;
+      gap: 24px;
     }
 
-    .section-label {
-      font-size: 13px;
+    .top-label {
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 2px;
-      color: #b07380;
-      font-weight: 800;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .main-heading {
-      font-size: 34px;
-      color: #32282c;
+      font-family: "Fraunces", serif;
+      font-size: clamp(30px, 4vw, 44px);
+      line-height: 1.1;
       letter-spacing: -0.8px;
-      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .sub-heading {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.65;
+      max-width: 620px;
+    }
+
+    .affirmation-card,
+    .voice-card {
+      background: rgba(255, 255, 255, 0.075);
+      border: 1px solid var(--glass-border);
+      border-radius: 30px;
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.22);
+      backdrop-filter: blur(16px);
     }
 
     .affirmation-card {
-      background: #ffffff;
-      border: 1px solid #f0d8df;
-      border-radius: 30px;
-      padding: 34px;
-      box-shadow: 0 20px 55px rgba(180, 112, 128, 0.12);
+      padding: 30px;
     }
 
-    .affirmation-title {
-      font-size: 24px;
-      color: #3a2f33;
+    .card-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
       margin-bottom: 18px;
+    }
+
+    .card-title h2 {
+      font-family: "Fraunces", serif;
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: -0.4px;
+    }
+
+    .small-badge {
+      color: var(--gold);
+      border: 1px solid rgba(215, 180, 106, 0.35);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 12px;
       font-weight: 800;
+      white-space: nowrap;
+      background: rgba(215, 180, 106, 0.08);
     }
 
     .affirmation-space {
-      min-height: 300px;
+      min-height: 330px;
       border-radius: 24px;
-      background:
-        linear-gradient(180deg, rgba(255, 250, 248, 0.95), rgba(255, 246, 244, 0.95));
-      border: 1.5px dashed #d7a1ae;
       padding: 28px;
-      font-size: 20px;
-      line-height: 1.9;
-      color: #4c3f43;
       outline: none;
+      color: var(--cream);
+      background:
+        linear-gradient(180deg, rgba(3, 17, 13, 0.62), rgba(7, 28, 22, 0.74));
+      border: 1.4px dashed rgba(215, 180, 106, 0.38);
+      font-size: 19px;
+      line-height: 1.9;
       white-space: pre-line;
+      transition: 0.25s ease;
     }
 
     .affirmation-space:focus {
-      border-color: #bf7587;
-      box-shadow: 0 0 0 4px rgba(191, 117, 135, 0.12);
+      border-color: rgba(215, 180, 106, 0.8);
+      box-shadow: 0 0 0 4px rgba(215, 180, 106, 0.09);
+      background:
+        linear-gradient(180deg, rgba(3, 17, 13, 0.72), rgba(7, 28, 22, 0.86));
     }
 
     .hint {
       margin-top: 14px;
+      color: var(--text-muted);
       font-size: 13px;
-      color: #8a7179;
       line-height: 1.6;
     }
 
     .voice-card {
-      background: #ffffff;
-      border-radius: 26px;
-      padding: 26px;
-      border: 1px solid #f0d8df;
-      box-shadow: 0 15px 42px rgba(180, 112, 128, 0.1);
+      padding: 28px;
     }
 
     .voice-card h3 {
-      font-size: 20px;
+      font-family: "Fraunces", serif;
+      font-size: 25px;
       margin-bottom: 8px;
-      color: #3a2f33;
     }
 
     .voice-card p {
+      color: var(--text-muted);
       font-size: 14px;
-      color: #7b6870;
-      margin-bottom: 20px;
-      line-height: 1.6;
+      line-height: 1.65;
+      margin-bottom: 18px;
+    }
+
+    .voice-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .voice-select {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(215, 180, 106, 0.32);
+      background: rgba(3, 17, 13, 0.55);
+      color: var(--cream);
+      font-size: 14px;
+      margin-bottom: 18px;
+      outline: none;
+    }
+
+    .voice-select:focus {
+      border-color: rgba(215, 180, 106, 0.8);
+      box-shadow: 0 0 0 4px rgba(215, 180, 106, 0.09);
     }
 
     .button-row {
@@ -215,6 +372,7 @@
       font-weight: 800;
       cursor: pointer;
       transition: 0.25s ease;
+      font-family: "Inter", sans-serif;
     }
 
     button:hover {
@@ -222,70 +380,86 @@
     }
 
     .listen-btn {
-      background: linear-gradient(135deg, #c98291, #e6b2a6);
-      color: white;
-      box-shadow: 0 12px 26px rgba(201, 130, 145, 0.28);
+      background: linear-gradient(135deg, var(--gold), #f0d58b);
+      color: #10281f;
+      box-shadow: 0 16px 34px rgba(215, 180, 106, 0.24);
     }
 
     .pause-btn,
     .resume-btn {
-      background: #fff1f3;
-      color: #9b5f6d;
-      border: 1px solid #e7c4cb;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--cream);
+      border: 1px solid rgba(255, 255, 255, 0.14);
     }
 
     .stop-btn {
-      background: #3a2f33;
-      color: white;
+      background: rgba(3, 17, 13, 0.92);
+      color: var(--cream);
+      border: 1px solid rgba(215, 180, 106, 0.22);
     }
 
     .status-text {
       margin-top: 16px;
       font-size: 13px;
-      color: #8a7179;
+      color: var(--sage);
+      line-height: 1.5;
     }
 
-    .small-reminder {
-      font-size: 13px;
-      color: #8a7179;
-      line-height: 1.6;
+    .bottom-reminder {
       text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.6;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 940px) {
       body {
         padding: 18px;
       }
 
-      .page-wrapper {
+      .page-shell {
         grid-template-columns: 1fr;
+        min-height: auto;
       }
 
       .left-panel {
-        min-height: 280px;
-        padding: 36px 28px;
+        padding: 38px 28px;
       }
 
-      .left-content h1 {
-        font-size: 36px;
+      .hero-copy {
+        margin-top: 52px;
       }
 
-      .main-content {
+      .ritual-card {
+        margin-top: 34px;
+      }
+
+      .main-panel {
         padding: 34px 24px;
       }
 
-      .main-heading {
-        font-size: 28px;
+      .affirmation-card,
+      .voice-card {
+        border-radius: 24px;
       }
 
       .affirmation-card {
-        padding: 24px;
+        padding: 22px;
       }
 
       .affirmation-space {
-        min-height: 280px;
-        font-size: 18px;
+        min-height: 300px;
         padding: 22px;
+        font-size: 17px;
+      }
+
+      .card-title {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .small-badge {
+        white-space: normal;
       }
     }
   </style>
@@ -293,58 +467,84 @@
 
 <body>
 
-  <div class="page-wrapper">
+  <div class="background-animation">
+    <div class="orb orb-one"></div>
+    <div class="orb orb-two"></div>
+    <div class="orb orb-three"></div>
+  </div>
+
+  <div class="page-shell">
 
     <aside class="left-panel">
-      <div class="brand-label">Morning Identity Practice</div>
+      <div class="brand-line">
+        <span></span>
+        Identity Ritual
+      </div>
 
-      <div class="left-content">
-        <h1>Read. Listen. Become.</h1>
+      <div class="hero-copy">
+        <h1>Read.<br>Listen.<br>Become.</h1>
         <p>
-          A calm personal space to reconnect with your strongest identity,
-          your discipline, your emotional control, and your direction.
+          A private affirmation space designed for calm focus, masculine identity,
+          emotional discipline, and daily inner alignment.
         </p>
       </div>
 
-      <div class="daily-note">
-        Best used in the morning before phone, social media, or external noise.
+      <div class="ritual-card">
+        <h3>Best Reading Time</h3>
+        <p>
+          Use this before social media, before external noise, and before the day starts controlling your attention.
+        </p>
       </div>
     </aside>
 
-    <main class="main-content">
+    <main class="main-panel">
 
-      <div>
-        <div class="section-label">Daily Affirmation</div>
-        <h2 class="main-heading">Your personal affirmation reading space</h2>
-      </div>
+      <section>
+        <div class="top-label">Daily Affirmation Practice</div>
+        <h2 class="main-heading">Your personal affirmation reading page</h2>
+        <p class="sub-heading">
+          Write your affirmation once. Read it slowly. Listen to it daily. Let repetition turn words into identity.
+        </p>
+      </section>
 
       <section class="affirmation-card">
-        <h3 class="affirmation-title">My Identity Affirmation</h3>
+        <div class="card-title">
+          <h2>My Affirmation</h2>
+          <div class="small-badge">Editable Space</div>
+        </div>
 
-        <!-- Paste or edit your affirmation directly inside this box -->
         <div class="affirmation-space" id="affirmationText" contenteditable="true">
 I am becoming calm, disciplined, powerful, and deeply aligned with the man I am meant to become.
 
-I keep promises to myself. I train my body consistently. I control my attention. I avoid desperation. I handle rejection with dignity.
+I keep promises to myself. I train my body consistently. I maintain strong grooming, hygiene, and physical presence.
 
-I speak slowly, clearly, and directly. I build real skills. I work on my financial growth. I do difficult things without complaining.
+I speak slowly, clearly, and directly. I build real skills and competence. I control my attention and avoid desperation.
 
-I carry confidence without arrogance. I remain calm under pressure. I move with self-respect, ambition, emotional discipline, and clear direction.
+I handle rejection with dignity. I work on my financial growth. I do difficult things without complaining.
 
-Every day, I become more grounded, more attractive, more capable, and more aligned with my highest identity.
+I carry confidence without arrogance. I remain calm under pressure. I move with self-respect, decisiveness, emotional stability, and clear direction.
+
+I have protective energy without control. I have ambition with discipline. I am grounded, capable, attractive, and internally powerful.
+
+Every day, I become more aligned with my highest identity.
         </div>
 
         <p class="hint">
-          Click inside the box to replace this text with your own affirmation.
+          Click inside this box and replace the text with your own affirmation whenever needed.
         </p>
       </section>
 
       <section class="voice-card">
-        <h3>Listen to My Affirmation</h3>
+        <h3>Listen to Affirmation</h3>
         <p>
-          No audio file is needed. Click listen and your browser will read the affirmation aloud.
-          The page will try to use a feminine voice if available on your device.
+          This uses your browser’s built-in voices. Select the best available feminine or soft voice from the dropdown.
+          For truly natural voice, you will need an AI-generated MP3 later.
         </p>
+
+        <label class="voice-label" for="voiceSelect">Choose Voice</label>
+        <select id="voiceSelect" class="voice-select">
+          <option>Loading voices...</option>
+        </select>
 
         <div class="button-row">
           <button class="listen-btn" onclick="speakAffirmation()">Listen</button>
@@ -358,8 +558,8 @@ Every day, I become more grounded, more attractive, more capable, and more align
         </div>
       </section>
 
-      <p class="small-reminder">
-        Read slowly. Listen with focus. Repeat daily until the words become your natural identity.
+      <p class="bottom-reminder">
+        Read slowly. Listen with attention. Repeat daily until the statement becomes your natural behaviour.
       </p>
 
     </main>
@@ -372,53 +572,87 @@ Every day, I become more grounded, more attractive, more capable, and more align
 
     function loadVoices() {
       availableVoices = window.speechSynthesis.getVoices();
+
+      const voiceSelect = document.getElementById("voiceSelect");
+      voiceSelect.innerHTML = "";
+
+      if (!availableVoices.length) {
+        const option = document.createElement("option");
+        option.textContent = "No voices found yet. Try refreshing the page.";
+        voiceSelect.appendChild(option);
+        return;
+      }
+
+      availableVoices.forEach(function (voice, index) {
+        const option = document.createElement("option");
+        const voiceName = voice.name.toLowerCase();
+
+        option.value = index;
+        option.textContent = voice.name + " — " + voice.lang;
+
+        if (
+          voiceName.includes("female") ||
+          voiceName.includes("zira") ||
+          voiceName.includes("samantha") ||
+          voiceName.includes("victoria") ||
+          voiceName.includes("karen") ||
+          voiceName.includes("moira") ||
+          voiceName.includes("neera") ||
+          voiceName.includes("heera") ||
+          voiceName.includes("aria") ||
+          voiceName.includes("jenny")
+        ) {
+          option.textContent = "Recommended: " + option.textContent;
+        }
+
+        voiceSelect.appendChild(option);
+      });
+
+      autoSelectBestVoice();
     }
 
-    loadVoices();
-
-    if ("speechSynthesis" in window) {
-      window.speechSynthesis.onvoiceschanged = loadVoices;
-    }
-
-    function getPreferredVoice() {
-      const voices = availableVoices.length
-        ? availableVoices
-        : window.speechSynthesis.getVoices();
+    function autoSelectBestVoice() {
+      const voiceSelect = document.getElementById("voiceSelect");
 
       const preferredVoiceNames = [
-        "female",
-        "zira",
+        "jenny",
+        "aria",
         "samantha",
         "victoria",
         "karen",
         "moira",
-        "tessa",
+        "zira",
+        "neera",
+        "heera",
         "google uk english female",
-        "google us english",
-        "microsoft zira",
-        "microsoft heera",
-        "microsoft neera"
+        "google us english"
       ];
 
-      let selectedVoice = voices.find(function (voice) {
+      const preferredIndex = availableVoices.findIndex(function (voice) {
         const voiceName = voice.name.toLowerCase();
+
         return preferredVoiceNames.some(function (preferredName) {
           return voiceName.includes(preferredName);
         });
       });
 
-      if (!selectedVoice) {
-        selectedVoice = voices.find(function (voice) {
-          return voice.lang === "en-IN" || voice.lang === "en-US" || voice.lang === "en-GB";
-        });
+      if (preferredIndex !== -1) {
+        voiceSelect.value = preferredIndex;
       }
+    }
 
-      return selectedVoice || null;
+    if ("speechSynthesis" in window) {
+      loadVoices();
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+
+      setTimeout(loadVoices, 500);
+      setTimeout(loadVoices, 1200);
     }
 
     function speakAffirmation() {
       const affirmationText = document.getElementById("affirmationText").innerText.trim();
       const statusText = document.getElementById("statusText");
+      const voiceSelect = document.getElementById("voiceSelect");
 
       if (!("speechSynthesis" in window)) {
         statusText.innerText = "Voice status: Your browser does not support text-to-speech.";
@@ -434,16 +668,18 @@ Every day, I become more grounded, more attractive, more capable, and more align
 
       currentSpeech = new SpeechSynthesisUtterance(affirmationText);
 
-      currentSpeech.lang = "en-IN";
-      currentSpeech.rate = 0.82;
-      currentSpeech.pitch = 1.15;
-      currentSpeech.volume = 1;
+      const selectedVoice = availableVoices[voiceSelect.value];
 
-      const preferredVoice = getPreferredVoice();
-
-      if (preferredVoice) {
-        currentSpeech.voice = preferredVoice;
+      if (selectedVoice) {
+        currentSpeech.voice = selectedVoice;
+        currentSpeech.lang = selectedVoice.lang;
+      } else {
+        currentSpeech.lang = "en-IN";
       }
+
+      currentSpeech.rate = 0.78;
+      currentSpeech.pitch = 1.05;
+      currentSpeech.volume = 1;
 
       currentSpeech.onstart = function () {
         statusText.innerText = "Voice status: Reading affirmation...";
@@ -454,7 +690,7 @@ Every day, I become more grounded, more attractive, more capable, and more align
       };
 
       currentSpeech.onerror = function () {
-        statusText.innerText = "Voice status: Something went wrong. Try again.";
+        statusText.innerText = "Voice status: Something went wrong. Try another voice.";
       };
 
       window.speechSynthesis.speak(currentSpeech);
