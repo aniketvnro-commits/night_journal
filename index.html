@@ -1,961 +1,490 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Night Command Journal</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <title>My Affirmation Reading Page</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Inter", "Segoe UI", Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(255, 214, 224, 0.75), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(247, 197, 175, 0.55), transparent 32%),
+        linear-gradient(135deg, #fff8f4, #f8e8ef, #f6f8fb);
+      color: #2f2f2f;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+    }
+
+    .page-wrapper {
+      width: 100%;
+      max-width: 1120px;
+      min-height: 700px;
+      background: rgba(255, 255, 255, 0.86);
+      backdrop-filter: blur(18px);
+      border-radius: 34px;
+      box-shadow: 0 30px 90px rgba(95, 54, 70, 0.16);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 0.9fr 1.35fr;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+
+    .left-panel {
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.28), transparent 26%),
+        linear-gradient(160deg, #c98291, #e8b3a6, #f6d9b9);
+      padding: 52px 42px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .left-panel::before {
+      content: "";
+      position: absolute;
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.32);
+      top: -70px;
+      right: -90px;
+    }
+
+    .left-panel::after {
+      content: "";
+      position: absolute;
+      width: 210px;
+      height: 210px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.18);
+      bottom: -60px;
+      left: -65px;
+    }
+
+    .brand-label {
+      font-size: 13px;
+      letter-spacing: 2.2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      opacity: 0.92;
+      position: relative;
+      z-index: 2;
+    }
+
+    .left-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .left-content h1 {
+      font-size: 46px;
+      line-height: 1.08;
+      margin-bottom: 20px;
+      font-weight: 800;
+      letter-spacing: -1.2px;
+    }
+
+    .left-content p {
+      font-size: 16px;
+      line-height: 1.75;
+      opacity: 0.94;
+      max-width: 350px;
+    }
+
+    .daily-note {
+      font-size: 14px;
+      line-height: 1.6;
+      opacity: 0.92;
+      position: relative;
+      z-index: 2;
+      max-width: 330px;
+    }
+
+    .main-content {
+      padding: 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 26px;
+    }
+
+    .section-label {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #b07380;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .main-heading {
+      font-size: 34px;
+      color: #32282c;
+      letter-spacing: -0.8px;
+      line-height: 1.15;
+    }
+
+    .affirmation-card {
+      background: #ffffff;
+      border: 1px solid #f0d8df;
+      border-radius: 30px;
+      padding: 34px;
+      box-shadow: 0 20px 55px rgba(180, 112, 128, 0.12);
+    }
+
+    .affirmation-title {
+      font-size: 24px;
+      color: #3a2f33;
+      margin-bottom: 18px;
+      font-weight: 800;
+    }
+
+    .affirmation-space {
+      min-height: 300px;
+      border-radius: 24px;
+      background:
+        linear-gradient(180deg, rgba(255, 250, 248, 0.95), rgba(255, 246, 244, 0.95));
+      border: 1.5px dashed #d7a1ae;
+      padding: 28px;
+      font-size: 20px;
+      line-height: 1.9;
+      color: #4c3f43;
+      outline: none;
+      white-space: pre-line;
+    }
+
+    .affirmation-space:focus {
+      border-color: #bf7587;
+      box-shadow: 0 0 0 4px rgba(191, 117, 135, 0.12);
+    }
+
+    .hint {
+      margin-top: 14px;
+      font-size: 13px;
+      color: #8a7179;
+      line-height: 1.6;
+    }
+
+    .voice-card {
+      background: #ffffff;
+      border-radius: 26px;
+      padding: 26px;
+      border: 1px solid #f0d8df;
+      box-shadow: 0 15px 42px rgba(180, 112, 128, 0.1);
+    }
+
+    .voice-card h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+      color: #3a2f33;
+    }
+
+    .voice-card p {
+      font-size: 14px;
+      color: #7b6870;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    button {
+      border: none;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+
+    .listen-btn {
+      background: linear-gradient(135deg, #c98291, #e6b2a6);
+      color: white;
+      box-shadow: 0 12px 26px rgba(201, 130, 145, 0.28);
+    }
+
+    .pause-btn,
+    .resume-btn {
+      background: #fff1f3;
+      color: #9b5f6d;
+      border: 1px solid #e7c4cb;
+    }
+
+    .stop-btn {
+      background: #3a2f33;
+      color: white;
+    }
+
+    .status-text {
+      margin-top: 16px;
+      font-size: 13px;
+      color: #8a7179;
+    }
+
+    .small-reminder {
+      font-size: 13px;
+      color: #8a7179;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      body {
+        padding: 18px;
+      }
+
+      .page-wrapper {
+        grid-template-columns: 1fr;
+      }
+
+      .left-panel {
+        min-height: 280px;
+        padding: 36px 28px;
+      }
+
+      .left-content h1 {
+        font-size: 36px;
+      }
+
+      .main-content {
+        padding: 34px 24px;
+      }
+
+      .main-heading {
+        font-size: 28px;
+      }
+
+      .affirmation-card {
+        padding: 24px;
+      }
+
+      .affirmation-space {
+        min-height: 280px;
+        font-size: 18px;
+        padding: 22px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<style>
-:root{
-  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-serif: Georgia, "Times New Roman", serif;
-  --color-text-primary:#171717;
-  --color-text-secondary:#4B5563;
-  --color-text-tertiary:#7A7A7A;
-  --color-background-primary:#FFFFFF;
-  --color-background-secondary:#F7F7FB;
-  --color-border-secondary:#D7D7E0;
-  --color-border-tertiary:#E3E3EA;
-  --border-radius-md:14px;
-  --border-radius-lg:18px;
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:var(--font-sans);background:#F4F3FA;color:var(--color-text-primary);padding:16px;}
-.app{max-width:380px;margin:0 auto;padding:0 0 2rem;}
-.screen{display:none;}
-.screen.active{display:block;}
 
-.top-bar{display:flex;align-items:center;justify-content:space-between;padding:16px 0 12px;}
-.top-bar-title{font-size:16px;font-weight:500;color:var(--color-text-primary);}
-.top-bar-sub{font-size:12px;color:var(--color-text-tertiary);margin-top:2px;}
-.icon-btn{background:none;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:6px 10px;cursor:pointer;font-size:16px;color:var(--color-text-secondary);display:flex;align-items:center;gap:4px;}
-.icon-btn span{font-size:12px;}
+  <div class="page-wrapper">
 
-.progress-bar{height:3px;background:var(--color-background-secondary);border-radius:2px;margin-bottom:20px;overflow:hidden;}
-.progress-fill{height:100%;background:#534AB7;border-radius:2px;transition:width 0.3s;}
+    <aside class="left-panel">
+      <div class="brand-label">Morning Identity Practice</div>
 
-.step-label{font-size:11px;letter-spacing:0.6px;text-transform:uppercase;color:#534AB7;font-weight:500;margin-bottom:6px;}
-.step-q{font-size:17px;font-weight:500;color:var(--color-text-primary);line-height:1.35;margin-bottom:4px;}
-.step-hint{font-size:13px;color:var(--color-text-tertiary);margin-bottom:16px;line-height:1.5;}
-
-textarea{width:100%;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:12px;font-size:15px;font-family:var(--font-sans);color:var(--color-text-primary);background:var(--color-background-secondary);resize:none;line-height:1.6;}
-textarea:focus{outline:none;border-color:#7F77DD;}
-
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px;}
-.chip{padding:8px 14px;border-radius:20px;border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);font-size:13px;color:var(--color-text-secondary);cursor:pointer;transition:all 0.15s;-webkit-tap-highlight-color:transparent;}
-.chip.on{background:#EEEDFE;border-color:#AFA9EC;color:#3C3489;font-weight:500;}
-
-.toggle-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
-.tog{padding:10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);font-size:13px;color:var(--color-text-secondary);cursor:pointer;text-align:center;line-height:1.4;-webkit-tap-highlight-color:transparent;}
-.tog.on{background:#EEEDFE;border-color:#AFA9EC;color:#3C3489;font-weight:500;}
-
-.dots-row{display:flex;gap:6px;align-items:center;margin:8px 0 16px;}
-.dot{width:28px;height:28px;border-radius:50%;border:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--color-text-secondary);cursor:pointer;font-weight:500;flex-shrink:0;}
-.dot.on{background:#534AB7;border-color:#534AB7;color:#EEEDFE;}
-.dot-label{font-size:12px;color:var(--color-text-tertiary);}
-
-.nav-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px;}
-.nav-btns.single{grid-template-columns:1fr;}
-.btn-back{padding:13px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:none;font-size:14px;font-weight:500;color:var(--color-text-secondary);cursor:pointer;}
-.btn-next{padding:13px;border-radius:var(--border-radius-md);border:none;background:#534AB7;font-size:14px;font-weight:500;color:#EEEDFE;cursor:pointer;}
-.btn-save{padding:14px;border-radius:var(--border-radius-md);border:none;background:#534AB7;font-size:15px;font-weight:500;color:#EEEDFE;cursor:pointer;width:100%;margin-top:20px;}
-
-.affirmation-box{border:0.5px solid #AFA9EC;border-radius:var(--border-radius-lg);background:#EEEDFE;padding:16px;margin:20px 0;}
-.aff-label{font-size:10px;letter-spacing:0.7px;text-transform:uppercase;color:#534AB7;font-weight:500;margin-bottom:8px;}
-.aff-text{font-family:var(--font-serif);font-size:15px;color:#26215C;line-height:1.6;font-style:italic;}
-
-.entry-card{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px;margin-bottom:10px;background:var(--color-background-primary);cursor:pointer;}
-.entry-date{font-size:12px;color:var(--color-text-tertiary);margin-bottom:6px;}
-.entry-row{display:flex;justify-content:space-between;align-items:center;}
-.entry-type{font-size:14px;font-weight:500;color:var(--color-text-primary);}
-.entry-scores{display:flex;gap:10px;}
-.score-pill{font-size:12px;color:#534AB7;background:#EEEDFE;border-radius:10px;padding:3px 10px;}
-.entry-win{font-size:13px;color:var(--color-text-secondary);margin-top:6px;line-height:1.4;}
-.no-entries{text-align:center;color:var(--color-text-tertiary);font-size:14px;padding:40px 0;}
-
-.detail-field{margin-bottom:14px;}
-.detail-label{font-size:11px;letter-spacing:0.5px;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:4px;}
-.detail-val{font-size:14px;color:var(--color-text-primary);line-height:1.5;}
-.detail-divider{height:0.5px;background:var(--color-border-tertiary);margin:14px 0;}
-.badge{display:inline-block;padding:4px 12px;border-radius:12px;font-size:12px;background:#EEEDFE;color:#3C3489;font-weight:500;}
-
-.home-greeting{font-size:22px;font-weight:500;color:var(--color-text-primary);line-height:1.3;margin-bottom:4px;}
-.home-date{font-size:13px;color:var(--color-text-tertiary);margin-bottom:24px;}
-.start-btn{width:100%;padding:16px;border-radius:var(--border-radius-lg);border:none;background:#534AB7;color:#EEEDFE;font-size:16px;font-weight:500;cursor:pointer;margin-bottom:12px;}
-.history-btn{width:100%;padding:14px;border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-secondary);background:none;color:var(--color-text-primary);font-size:14px;font-weight:500;cursor:pointer;}
-.streak-box{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:14px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;}
-.streak-num{font-size:24px;font-weight:500;color:#534AB7;}
-.streak-label{font-size:12px;color:var(--color-text-tertiary);margin-top:2px;}
-.streak-icon{font-size:24px;}
-
-.lock-card{min-height:92vh;display:flex;align-items:center;justify-content:center;}
-.lock-panel{width:100%;background:linear-gradient(180deg,#FFFFFF 0%,#F7F7FB 100%);border:1px solid rgba(83,74,183,.14);border-radius:28px;padding:24px;box-shadow:0 24px 70px rgba(31,27,72,.14);position:relative;overflow:hidden;}
-.lock-panel:before{content:"";position:absolute;right:-60px;top:-60px;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,#EEEDFE 0%,rgba(238,237,254,0) 70%);}
-.lock-mark{width:48px;height:48px;border-radius:16px;background:#534AB7;color:#EEEDFE;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:16px;box-shadow:0 12px 26px rgba(83,74,183,.22);}
-.lock-title{font-size:25px;line-height:1.15;font-weight:650;color:#171717;margin-bottom:6px;letter-spacing:-.4px;}
-.lock-sub{font-size:13px;color:var(--color-text-tertiary);line-height:1.55;margin-bottom:20px;}
-.lock-field{margin-bottom:12px;}
-.lock-label{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:#534AB7;font-weight:650;margin-bottom:6px;}
-.lock-input{width:100%;border:1px solid var(--color-border-secondary);border-radius:16px;background:#fff;padding:14px;font-size:15px;color:var(--color-text-primary);}
-.lock-input:focus{outline:none;border-color:#7F77DD;box-shadow:0 0 0 4px rgba(127,119,221,.12);}
-.lock-error{display:none;color:#B42318;background:#FFF3F0;border:1px solid #FFD2C7;padding:10px 12px;border-radius:14px;font-size:13px;line-height:1.4;margin-top:12px;}
-.lock-note{font-size:11px;color:var(--color-text-tertiary);line-height:1.5;margin-top:14px;text-align:center;}
-.app-shell{background:#fff;border:1px solid rgba(83,74,183,.08);border-radius:28px;box-shadow:0 18px 55px rgba(31,27,72,.10);padding:0 18px 20px;min-height:92vh;}
-.home-hero{background:linear-gradient(135deg,#F6F5FF 0%,#FFFFFF 65%);border:1px solid #EEEDFE;border-radius:24px;padding:18px;margin:4px 0 18px;position:relative;overflow:hidden;}
-.home-hero:after{content:"";position:absolute;right:-36px;bottom:-36px;width:110px;height:110px;border-radius:34px;background:rgba(83,74,183,.08);transform:rotate(18deg);}
-.home-actions{display:grid;grid-template-columns:1fr;gap:10px;}
-.start-btn,.history-btn,.dash-btn,.logout-btn{transition:transform .15s ease, box-shadow .15s ease;}
-.start-btn:active,.history-btn:active,.dash-btn:active,.logout-btn:active,.chip:active,.tog:active{transform:scale(.98);}
-.dash-btn{width:100%;padding:14px;border-radius:var(--border-radius-lg);border:0.5px solid #AFA9EC;background:#EEEDFE;color:#3C3489;font-size:14px;font-weight:600;cursor:pointer;}
-.logout-btn{width:100%;padding:12px;border-radius:var(--border-radius-lg);border:none;background:transparent;color:var(--color-text-tertiary);font-size:13px;font-weight:500;cursor:pointer;}
-.metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0;}
-.metric-card{background:var(--color-background-secondary);border:1px solid var(--color-border-tertiary);border-radius:18px;padding:14px;}
-.metric-value{font-size:24px;font-weight:700;color:#534AB7;letter-spacing:-.5px;}
-.metric-label{font-size:11px;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:.5px;margin-top:3px;line-height:1.35;}
-.week-list{display:grid;gap:10px;margin-top:14px;}
-.week-row{background:#fff;border:1px solid var(--color-border-tertiary);border-radius:16px;padding:12px;}
-.week-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:10px;}
-.week-day{font-size:13px;font-weight:650;color:var(--color-text-primary);}
-.week-score{font-size:12px;color:#534AB7;background:#EEEDFE;border-radius:999px;padding:4px 9px;font-weight:650;white-space:nowrap;}
-.bar-track{height:8px;background:#F0EFF7;border-radius:999px;overflow:hidden;margin-bottom:6px;}
-.bar-fill{height:100%;background:#534AB7;border-radius:999px;width:0%;}
-.week-meta{font-size:12px;color:var(--color-text-tertiary);line-height:1.4;}
-.insight-box{background:#26215C;color:#F7F7FB;border-radius:20px;padding:15px;margin-top:14px;line-height:1.55;font-size:13px;}
-.insight-box strong{color:#FFFFFF;}
-.section-title{font-size:15px;font-weight:700;color:var(--color-text-primary);margin-top:18px;margin-bottom:8px;}
-.chip.on{box-shadow:0 7px 18px rgba(83,74,183,.12);}
-
-.entry-card{position:relative;}
-.entry-main{padding-right:0;}
-.entry-actions{display:flex;gap:8px;margin-top:10px;}
-.delete-entry-btn{border:1px solid #FFD2C7;background:#FFF3F0;color:#B42318;border-radius:12px;padding:8px 10px;font-size:12px;font-weight:650;cursor:pointer;display:inline-flex;align-items:center;gap:5px;}
-.delete-entry-btn:active{transform:scale(.98);}
-.detail-actions{display:grid;grid-template-columns:1fr;gap:10px;margin:14px 0 4px;}
-.dash-filter-panel{background:#fff;border:1px solid var(--color-border-tertiary);border-radius:20px;padding:14px;margin:12px 0 14px;}
-.filter-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
-.filter-label{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:#534AB7;font-weight:700;margin-bottom:6px;}
-.date-input{width:100%;border:1px solid var(--color-border-secondary);border-radius:14px;background:#F7F7FB;padding:11px;font-size:13px;color:var(--color-text-primary);}
-.date-input:focus{outline:none;border-color:#7F77DD;box-shadow:0 0 0 4px rgba(127,119,221,.10);}
-.question-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
-.question-tabs::-webkit-scrollbar{display:none;}
-.q-tab{border:1px solid var(--color-border-tertiary);background:#fff;color:var(--color-text-secondary);border-radius:999px;padding:8px 12px;font-size:12px;font-weight:650;white-space:nowrap;cursor:pointer;}
-.q-tab.on{background:#534AB7;color:#EEEDFE;border-color:#534AB7;box-shadow:0 8px 18px rgba(83,74,183,.16);}
-.question-panel{background:linear-gradient(180deg,#FFFFFF 0%,#F9F8FF 100%);border:1px solid #EEEDFE;border-radius:20px;padding:14px;margin-top:12px;}
-.question-title{font-size:14px;font-weight:750;color:#171717;margin-bottom:4px;}
-.question-sub{font-size:12px;color:var(--color-text-tertiary);line-height:1.45;margin-bottom:12px;}
-.timeline-list{display:grid;gap:10px;}
-.timeline-row{border:1px solid var(--color-border-tertiary);background:#fff;border-radius:16px;padding:12px;cursor:pointer;}
-.timeline-top{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px;}
-.timeline-date{font-size:12px;font-weight:700;color:#171717;}
-.timeline-pill{font-size:11px;color:#534AB7;background:#EEEDFE;border-radius:999px;padding:4px 8px;font-weight:700;white-space:nowrap;}
-.timeline-value{font-size:13px;color:var(--color-text-secondary);line-height:1.45;}
-.empty-panel{text-align:center;color:var(--color-text-tertiary);font-size:13px;line-height:1.5;padding:22px 8px;background:#fff;border:1px dashed var(--color-border-secondary);border-radius:16px;}
-.mini-summary{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
-.mini-card{background:#F7F7FB;border:1px solid var(--color-border-tertiary);border-radius:16px;padding:10px;}
-.mini-value{font-size:18px;font-weight:800;color:#534AB7;}
-.mini-label{font-size:10px;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
-
-@media (min-width:700px){.app{max-width:430px}.app-shell{min-height:auto}.lock-card{min-height:88vh}}
-
-</style>
-
-<div class="app app-shell">
-
-
-<div id="lock" class="screen active">
-  <div class="lock-card">
-    <div class="lock-panel">
-      <div class="lock-mark"><i class="ti ti-lock"></i></div>
-      <div class="lock-title">Night Command</div>
-      <div class="lock-sub">Private local journal. Unlock first, then write, review, and compare your weekly progress.</div>
-      <div class="lock-field">
-        <div class="lock-label">Login ID</div>
-        <input class="lock-input" id="login-id" type="text" placeholder="Enter login ID" autocomplete="username">
+      <div class="left-content">
+        <h1>Read. Listen. Become.</h1>
+        <p>
+          A calm personal space to reconnect with your strongest identity,
+          your discipline, your emotional control, and your direction.
+        </p>
       </div>
-      <div class="lock-field">
-        <div class="lock-label">Password</div>
-        <input class="lock-input" id="login-pass" type="password" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key==='Enter') unlockApp()">
+
+      <div class="daily-note">
+        Best used in the morning before phone, social media, or external noise.
       </div>
-      <button class="start-btn" onclick="unlockApp()"><i class="ti ti-key"></i> Unlock journal</button>
-      <div class="lock-error" id="lock-error">Wrong login ID or password. Try again.</div>
-      <div class="lock-note">Basic front-end lock only. Your entries remain in this browser’s local storage.</div>
-    </div>
-  </div>
-</div>
+    </aside>
 
-<div id="home" class="screen">
-  <div class="top-bar">
-    <div>
-      <div class="top-bar-title">Night Command</div>
-      <div class="top-bar-sub">5-minute sleep journal</div>
-    </div>
-  </div>
-  <div class="home-hero">
-    <div class="home-greeting" id="home-greeting">Good evening.</div>
-    <div class="home-date" id="home-date"></div>
-  </div>
-  <div class="streak-box">
-    <div>
-      <div class="streak-num" id="streak-count">0</div>
-      <div class="streak-label">night streak</div>
-    </div>
-    <i class="ti ti-moon" aria-hidden="true" style="font-size:28px;color:#7F77DD;"></i>
-  </div>
-  <div class="home-actions">
-    <button class="start-btn" onclick="startJournal()"><i class="ti ti-pencil" aria-hidden="true"></i> Start tonight's entry</button>
-    <button class="dash-btn" onclick="showDashboard()"><i class="ti ti-chart-line" aria-hidden="true"></i> Weekly comparison dashboard</button>
-    <button class="history-btn" onclick="showHistory()"><i class="ti ti-calendar" aria-hidden="true"></i> Past entries</button>
-    <button class="logout-btn" onclick="lockApp()"><i class="ti ti-logout" aria-hidden="true"></i> Lock journal</button>
-  </div>
-</div>
+    <main class="main-content">
 
-<div id="journal" class="screen">
-  <div class="top-bar">
-    <button class="icon-btn" onclick="goHome()"><i class="ti ti-x"></i></button>
-    <div style="text-align:right;">
-      <div style="font-size:12px;color:var(--color-text-tertiary);" id="step-counter">Step 1 of 6</div>
-    </div>
-  </div>
-  <div class="progress-bar"><div class="progress-fill" id="prog" style="width:16%;"></div></div>
-
-  <div id="s1">
-    <div class="step-label">Step 1 · Mind dump</div>
-    <div class="step-q">What is still in your mind?</div>
-    <div class="step-hint">Write whatever is still running in your head.</div>
-    <textarea id="mind-dump" rows="4" placeholder="Whatever is looping..."></textarea>
-    <div style="margin-top:14px;">
-      <div class="step-hint" style="margin-bottom:8px;">Can I do anything about it tonight?</div>
-      <div class="toggle-row">
-        <div class="tog" id="tog-act" onclick="setPark('act')">Yes — one small action</div>
-        <div class="tog" id="tog-park" onclick="setPark('park')">No — park it for tomorrow</div>
-      </div>
-      <div id="park-box" style="display:none;">
-        <textarea id="park-text" rows="2" placeholder="Parked here, deal with it tomorrow..."></textarea>
-      </div>
-    </div>
-    <div class="nav-btns single"><button class="btn-next" onclick="goStep(2)">Next</button></div>
-  </div>
-
-  <div id="s2" style="display:none;">
-    <div class="step-label">Step 2 · Day type</div>
-    <div class="step-q">What kind of day was this?</div>
-    <div class="step-hint">Choose one or more.</div>
-    <div class="chips" id="day-chips">
-      <div class="chip" onclick="toggleMulti(this)">Heavy day</div>
-      <div class="chip" onclick="toggleMulti(this)">Productive day</div>
-      <div class="chip" onclick="toggleMulti(this)">Confusing day</div>
-      <div class="chip" onclick="toggleMulti(this)">Emotional day</div>
-      <div class="chip" onclick="toggleMulti(this)">Disciplined day</div>
-      <div class="chip" onclick="toggleMulti(this)">Survival day</div>
-      <div class="chip" onclick="toggleMulti(this)">Growth day</div>
-    </div>
-    <div style="margin-top:14px;">
-      <div class="step-hint">One honest line about today</div>
-      <textarea id="day-line" rows="2" placeholder="Be real..."></textarea>
-    </div>
-    <div style="margin-top:14px;">
-      <div class="step-hint" style="margin-bottom:8px;">Day score</div>
-      <div class="dots-row" id="day-score-dots"></div>
-    </div>
-    <div class="nav-btns">
-      <button class="btn-back" onclick="goStep(1)">Back</button>
-      <button class="btn-next" onclick="goStep(3)">Next</button>
-    </div>
-  </div>
-
-  <div id="s3" style="display:none;">
-    <div class="step-label">Step 3 · Pattern</div>
-    <div class="step-q">What pattern showed up today?</div>
-    <div class="step-hint">Choose the strongest one.</div>
-    <div class="chips" id="pat-chips">
-      <div class="chip" onclick="toggleMulti(this)">I executed well</div>
-      <div class="chip" onclick="toggleMulti(this)">I overthought</div>
-      <div class="chip" onclick="toggleMulti(this)">I delayed</div>
-      <div class="chip" onclick="toggleMulti(this)">I got distracted</div>
-      <div class="chip" onclick="toggleMulti(this)">I reacted emotionally</div>
-      <div class="chip" onclick="toggleMulti(this)">I stayed disciplined</div>
-      <div class="chip" onclick="toggleMulti(this)">I lacked clarity</div>
-      <div class="chip" onclick="toggleMulti(this)">I handled pressure well</div>
-    </div>
-    <div style="margin-top:14px;">
-      <div class="step-hint">What triggered this pattern?</div>
-      <textarea id="trigger" rows="2" placeholder="Be specific..."></textarea>
-    </div>
-    <div class="nav-btns">
-      <button class="btn-back" onclick="goStep(2)">Back</button>
-      <button class="btn-next" onclick="goStep(4)">Next</button>
-    </div>
-  </div>
-
-  <div id="s4" style="display:none;">
-    <div class="step-label">Step 4 · Strength</div>
-    <div class="step-q">What did you do right?</div>
-    <div class="step-hint">Even if the day was bad — find one proof of strength.</div>
-    <textarea id="one-win" rows="2" placeholder="One win I must respect..."></textarea>
-    <div style="margin-top:14px;">
-      <div class="step-hint" style="margin-bottom:8px;">This proves that I am...</div>
-      <div class="chips" id="id-chips">
-        <div class="chip" onclick="toggleMulti(this)">Disciplined</div>
-        <div class="chip" onclick="toggleMulti(this)">Capable</div>
-        <div class="chip" onclick="toggleMulti(this)">Improving</div>
-        <div class="chip" onclick="toggleMulti(this)">Resilient</div>
-        <div class="chip" onclick="toggleMulti(this)">Focused</div>
-        <div class="chip" onclick="toggleMulti(this)">Consistent</div>
-      </div>
-    </div>
-    <div style="margin-top:14px;">
-      <div class="step-hint" style="margin-bottom:8px;">Energy left today</div>
-      <div class="dots-row" id="energy-dots"></div>
-    </div>
-    <div class="nav-btns">
-      <button class="btn-back" onclick="goStep(3)">Back</button>
-      <button class="btn-next" onclick="goStep(5)">Next</button>
-    </div>
-  </div>
-
-  <div id="s5" style="display:none;">
-    <div class="step-label">Step 5 · Correction</div>
-    <div class="step-q">What must you correct tomorrow?</div>
-    <div class="step-hint">Just one. Not ten.</div>
-    <textarea id="one-correct" rows="2" placeholder="One thing to correct..."></textarea>
-    <div style="margin-top:14px;">
-      <div class="step-hint">Tomorrow I will correct it by...</div>
-      <textarea id="how-correct" rows="2" placeholder="How specifically?"></textarea>
-    </div>
-    <div class="nav-btns">
-      <button class="btn-back" onclick="goStep(4)">Back</button>
-      <button class="btn-next" onclick="goStep(6)">Next</button>
-    </div>
-  </div>
-
-  <div id="s6" style="display:none;">
-    <div class="step-label">Step 6 · Tomorrow</div>
-    <div class="step-q">Tomorrow's first move</div>
-    <div class="step-hint">Before anything else tomorrow, you will...</div>
-    <textarea id="first-move" rows="2" placeholder="First action only..."></textarea>
-    <div style="margin-top:14px;">
-      <div class="step-hint">One thing I will avoid tomorrow</div>
-      <textarea id="avoid" rows="2" placeholder="Be specific..."></textarea>
-    </div>
-    <div class="affirmation-box">
-      <div class="aff-label">Final night line</div>
-      <div class="aff-text">"I closed today. I keep the lesson, not the burden. Tomorrow I will return sharper."</div>
-    </div>
-    <div class="nav-btns">
-      <button class="btn-back" onclick="goStep(5)">Back</button>
-      <button class="btn-next" onclick="saveEntry()">Save entry</button>
-    </div>
-  </div>
-</div>
-
-<div id="done" class="screen">
-  <div style="text-align:center;padding:40px 0 20px;">
-    <i class="ti ti-check" aria-hidden="true" style="font-size:40px;color:#534AB7;"></i>
-    <div style="font-size:20px;font-weight:500;margin-top:12px;color:var(--color-text-primary);">Entry saved.</div>
-    <div style="font-size:14px;color:var(--color-text-tertiary);margin-top:6px;">Sleep well. Tomorrow you return sharper.</div>
-  </div>
-  <div class="affirmation-box">
-    <div class="aff-label">Tonight's summary</div>
-    <div id="done-summary" style="font-size:14px;color:#26215C;line-height:1.7;"></div>
-  </div>
-  <button class="btn-save" onclick="goHome()">Back to home</button>
-</div>
-
-<div id="history" class="screen">
-  <div class="top-bar">
-    <button class="icon-btn" onclick="showScreen('home')"><i class="ti ti-arrow-left"></i> <span>Back</span></button>
-    <div class="top-bar-title">Past entries</div>
-  </div>
-  <div id="history-list"></div>
-</div>
-
-
-<div id="dashboard" class="screen">
-  <div class="top-bar">
-    <button class="icon-btn" onclick="showScreen('home')"><i class="ti ti-arrow-left"></i> <span>Back</span></button>
-    <div class="top-bar-title">Progress dashboard</div>
-  </div>
-  <div class="section-title">Local progress summary</div>
-  <div class="metric-grid">
-    <div class="metric-card"><div class="metric-value" id="dash-entries">0</div><div class="metric-label">Entries in filter</div></div>
-    <div class="metric-card"><div class="metric-value" id="dash-avg-day">—</div><div class="metric-label">Avg day score</div></div>
-    <div class="metric-card"><div class="metric-value" id="dash-avg-energy">—</div><div class="metric-label">Avg energy</div></div>
-    <div class="metric-card"><div class="metric-value" id="dash-streak">0</div><div class="metric-label">Current streak</div></div>
-  </div>
-
-  <div class="dash-filter-panel">
-    <div class="filter-grid">
       <div>
-        <div class="filter-label">From date</div>
-        <input class="date-input" id="dash-from" type="date" onchange="renderDashboard()">
+        <div class="section-label">Daily Affirmation</div>
+        <h2 class="main-heading">Your personal affirmation reading space</h2>
       </div>
-      <div>
-        <div class="filter-label">To date</div>
-        <input class="date-input" id="dash-to" type="date" onchange="renderDashboard()">
-      </div>
-    </div>
-    <div class="filter-label">Compare by question</div>
-    <div class="question-tabs" id="question-tabs">
-      <button class="q-tab on" data-q="dayScore" onclick="setDashboardQuestion('dayScore')">Day score</button>
-      <button class="q-tab" data-q="energyScore" onclick="setDashboardQuestion('energyScore')">Energy left</button>
-      <button class="q-tab" data-q="dayType" onclick="setDashboardQuestion('dayType')">Day type</button>
-      <button class="q-tab" data-q="pattern" onclick="setDashboardQuestion('pattern')">Pattern</button>
-      <button class="q-tab" data-q="identity" onclick="setDashboardQuestion('identity')">Identity proof</button>
-      <button class="q-tab" data-q="oneCorrect" onclick="setDashboardQuestion('oneCorrect')">Correction</button>
-      <button class="q-tab" data-q="firstMove" onclick="setDashboardQuestion('firstMove')">First move</button>
-      <button class="q-tab" data-q="avoid" onclick="setDashboardQuestion('avoid')">Avoid</button>
-      <button class="q-tab" data-q="mindDump" onclick="setDashboardQuestion('mindDump')">Mind dump</button>
-    </div>
+
+      <section class="affirmation-card">
+        <h3 class="affirmation-title">My Identity Affirmation</h3>
+
+        <!-- Paste or edit your affirmation directly inside this box -->
+        <div class="affirmation-space" id="affirmationText" contenteditable="true">
+I am becoming calm, disciplined, powerful, and deeply aligned with the man I am meant to become.
+
+I keep promises to myself. I train my body consistently. I control my attention. I avoid desperation. I handle rejection with dignity.
+
+I speak slowly, clearly, and directly. I build real skills. I work on my financial growth. I do difficult things without complaining.
+
+I carry confidence without arrogance. I remain calm under pressure. I move with self-respect, ambition, emotional discipline, and clear direction.
+
+Every day, I become more grounded, more attractive, more capable, and more aligned with my highest identity.
+        </div>
+
+        <p class="hint">
+          Click inside the box to replace this text with your own affirmation.
+        </p>
+      </section>
+
+      <section class="voice-card">
+        <h3>Listen to My Affirmation</h3>
+        <p>
+          No audio file is needed. Click listen and your browser will read the affirmation aloud.
+          The page will try to use a feminine voice if available on your device.
+        </p>
+
+        <div class="button-row">
+          <button class="listen-btn" onclick="speakAffirmation()">Listen</button>
+          <button class="pause-btn" onclick="pauseAffirmation()">Pause</button>
+          <button class="resume-btn" onclick="resumeAffirmation()">Resume</button>
+          <button class="stop-btn" onclick="stopAffirmation()">Stop</button>
+        </div>
+
+        <div class="status-text" id="statusText">
+          Voice status: Ready
+        </div>
+      </section>
+
+      <p class="small-reminder">
+        Read slowly. Listen with focus. Repeat daily until the words become your natural identity.
+      </p>
+
+    </main>
+
   </div>
 
-  <div class="insight-box" id="dash-insight">Choose a date range and question to see fluctuations across entries.</div>
-  <div class="question-panel">
-    <div class="question-title" id="question-title">Day score fluctuation</div>
-    <div class="question-sub" id="question-sub">Shows how your score moved across saved entries in the selected date range.</div>
-    <div id="question-output"></div>
-  </div>
+  <script>
+    let currentSpeech = null;
+    let availableVoices = [];
 
-  <div class="section-title">Day-by-day score comparison</div>
-  <div class="week-list" id="week-list"></div>
-</div>
-
-<div id="detail" class="screen">
-  <div class="top-bar">
-    <button class="icon-btn" onclick="showScreen('history')"><i class="ti ti-arrow-left"></i> <span>Back</span></button>
-    <div class="top-bar-title" id="detail-date"></div>
-  </div>
-  <div id="detail-body"></div>
-</div>
-
-</div>
-
-<script>
-let state = {};
-let parkChoice = '';
-let dayScore = 0;
-let energyScore = 0;
-let selectedDashboardQuestion = 'dayScore';
-let dashboardInitialized = false;
-
-const LOCK_LOGIN_ID = 'aniket';
-const LOCK_PASSWORD = 'nightcommand';
-const LOCK_SESSION_KEY = 'nc_unlocked';
-
-const ENTRY_PREFIX = 'nc:';
-
-const storageAdapter = {
-  async set(key, value) {
-    try {
-      localStorage.setItem(key, value);
-      return true;
-    } catch (error) {
-      if (window.storage && typeof window.storage.set === 'function') {
-        await window.storage.set(key, value);
-        return true;
-      }
-      console.error('Entry save failed:', error);
-      return false;
+    function loadVoices() {
+      availableVoices = window.speechSynthesis.getVoices();
     }
-  },
-  async get(key) {
-    try {
-      const value = localStorage.getItem(key);
-      return value ? { value } : null;
-    } catch (error) {
-      if (window.storage && typeof window.storage.get === 'function') {
-        return await window.storage.get(key);
-      }
-      return null;
+
+    loadVoices();
+
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.onvoiceschanged = loadVoices;
     }
-  },
-  async remove(key) {
-    try {
-      localStorage.removeItem(key);
-      return true;
-    } catch (error) {
-      if (window.storage && typeof window.storage.delete === 'function') {
-        await window.storage.delete(key);
-        return true;
+
+    function getPreferredVoice() {
+      const voices = availableVoices.length
+        ? availableVoices
+        : window.speechSynthesis.getVoices();
+
+      const preferredVoiceNames = [
+        "female",
+        "zira",
+        "samantha",
+        "victoria",
+        "karen",
+        "moira",
+        "tessa",
+        "google uk english female",
+        "google us english",
+        "microsoft zira",
+        "microsoft heera",
+        "microsoft neera"
+      ];
+
+      let selectedVoice = voices.find(function (voice) {
+        const voiceName = voice.name.toLowerCase();
+        return preferredVoiceNames.some(function (preferredName) {
+          return voiceName.includes(preferredName);
+        });
+      });
+
+      if (!selectedVoice) {
+        selectedVoice = voices.find(function (voice) {
+          return voice.lang === "en-IN" || voice.lang === "en-US" || voice.lang === "en-GB";
+        });
       }
-      return false;
+
+      return selectedVoice || null;
     }
-  },
-  async list(prefix) {
-    try {
-      const keys = [];
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key && key.startsWith(prefix)) keys.push(key);
+
+    function speakAffirmation() {
+      const affirmationText = document.getElementById("affirmationText").innerText.trim();
+      const statusText = document.getElementById("statusText");
+
+      if (!("speechSynthesis" in window)) {
+        statusText.innerText = "Voice status: Your browser does not support text-to-speech.";
+        return;
       }
-      return { keys };
-    } catch (error) {
-      if (window.storage && typeof window.storage.list === 'function') {
-        return await window.storage.list(prefix);
+
+      if (!affirmationText) {
+        statusText.innerText = "Voice status: Please write your affirmation first.";
+        return;
       }
-      return { keys: [] };
-    }
-  }
-};
 
-function unlockApp() {
-  const id = document.getElementById('login-id').value.trim();
-  const pass = document.getElementById('login-pass').value;
-  const error = document.getElementById('lock-error');
-  if (id === LOCK_LOGIN_ID && pass === LOCK_PASSWORD) {
-    sessionStorage.setItem(LOCK_SESSION_KEY, 'yes');
-    error.style.display = 'none';
-    showScreen('home');
-    updateHome();
-  } else {
-    error.style.display = 'block';
-  }
-}
+      window.speechSynthesis.cancel();
 
-function lockApp() {
-  sessionStorage.removeItem(LOCK_SESSION_KEY);
-  document.getElementById('login-pass').value = '';
-  showScreen('lock');
-}
+      currentSpeech = new SpeechSynthesisUtterance(affirmationText);
 
-function bootLock() {
-  if (sessionStorage.getItem(LOCK_SESSION_KEY) === 'yes') {
-    showScreen('home');
-    updateHome();
-  } else {
-    showScreen('lock');
-  }
-}
+      currentSpeech.lang = "en-IN";
+      currentSpeech.rate = 0.82;
+      currentSpeech.pitch = 1.15;
+      currentSpeech.volume = 1;
 
+      const preferredVoice = getPreferredVoice();
 
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
+      if (preferredVoice) {
+        currentSpeech.voice = preferredVoice;
+      }
 
-function goHome() { showScreen('home'); updateHome(); }
-
-function startJournal() {
-  state = {}; parkChoice = ''; dayScore = 0; energyScore = 0;
-  document.querySelectorAll('textarea').forEach(t => t.value = '');
-  document.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
-  document.querySelectorAll('.tog').forEach(t => t.classList.remove('on'));
-  document.getElementById('park-box').style.display = 'none';
-  buildDots('day-score-dots', 10, v => dayScore = v, () => dayScore);
-  buildDots('energy-dots', 10, v => energyScore = v, () => energyScore);
-  goStep(1);
-  showScreen('journal');
-}
-
-function buildDots(containerId, count, setter, getter) {
-  const c = document.getElementById(containerId);
-  if (!c) return;
-  c.innerHTML = '';
-  for (let i = 1; i <= count; i++) {
-    const d = document.createElement('div');
-    d.className = 'dot';
-    d.textContent = i;
-    d.onclick = (function(val) {
-      return function() {
-        setter(val);
-        c.querySelectorAll('.dot').forEach((x, idx) => x.classList.toggle('on', idx < val));
+      currentSpeech.onstart = function () {
+        statusText.innerText = "Voice status: Reading affirmation...";
       };
-    })(i);
-    c.appendChild(d);
-  }
-}
 
-function goStep(n) {
-  for (let i = 1; i <= 6; i++) {
-    const el = document.getElementById('s' + i);
-    if (el) el.style.display = i === n ? 'block' : 'none';
-  }
-  document.getElementById('prog').style.width = Math.round((n / 6) * 100) + '%';
-  document.getElementById('step-counter').textContent = 'Step ' + n + ' of 6';
-}
+      currentSpeech.onend = function () {
+        statusText.innerText = "Voice status: Completed";
+      };
 
-function setPark(val) {
-  parkChoice = val;
-  document.getElementById('tog-act').classList.toggle('on', val === 'act');
-  document.getElementById('tog-park').classList.toggle('on', val === 'park');
-  document.getElementById('park-box').style.display = val === 'park' ? 'block' : 'none';
-}
+      currentSpeech.onerror = function () {
+        statusText.innerText = "Voice status: Something went wrong. Try again.";
+      };
 
-function pickOne(el, group) {
-  document.getElementById(group + '-chips').querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
-  el.classList.add('on');
-}
-
-function toggleMulti(el) { el.classList.toggle('on'); }
-
-function getKey(id) { return document.getElementById(id) ? document.getElementById(id).value.trim() : ''; }
-
-function escapeHtml(value) {
-  return String(value || '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
-
-function getLocalDateKey(date = new Date()) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
-
-async function saveEntry() {
-  const today = getLocalDateKey();
-  const dayTypes = Array.from(document.querySelectorAll('#day-chips .chip.on')).map(c => c.textContent);
-  const patterns = Array.from(document.querySelectorAll('#pat-chips .chip.on')).map(c => c.textContent);
-  const identity = Array.from(document.querySelectorAll('#id-chips .chip.on')).map(c => c.textContent).join(', ');
-
-  const entry = {
-    date: today,
-    savedAt: new Date().toISOString(),
-    mindDump: getKey('mind-dump'),
-    parkChoice,
-    parkText: getKey('park-text'),
-    dayType: dayTypes.join(', '),
-    dayTypes,
-    dayLine: getKey('day-line'),
-    dayScore,
-    pattern: patterns.join(', '),
-    patterns,
-    trigger: getKey('trigger'),
-    oneWin: getKey('one-win'),
-    identity,
-    energyScore,
-    oneCorrect: getKey('one-correct'),
-    howCorrect: getKey('how-correct'),
-    firstMove: getKey('first-move'),
-    avoid: getKey('avoid'),
-  };
-
-  const key = ENTRY_PREFIX + today;
-  const saved = await storageAdapter.set(key, JSON.stringify(entry));
-
-  const parts = [];
-  if (entry.dayType) parts.push('It was a <strong>' + escapeHtml(entry.dayType) + '</strong>.');
-  if (entry.pattern) parts.push('Main pattern: ' + escapeHtml(entry.pattern) + '.');
-  if (entry.oneWin) parts.push('Win: ' + escapeHtml(entry.oneWin));
-  if (entry.firstMove) parts.push('Tomorrow starts with: ' + escapeHtml(entry.firstMove));
-  if (!saved) parts.push('<strong>Note:</strong> Save failed. Please check browser storage permission.');
-  document.getElementById('done-summary').innerHTML = parts.join('<br>') || 'Entry saved for tonight.';
-
-  updateHome();
-  showScreen('done');
-}
-
-async function showHistory() {
-  const list = document.getElementById('history-list');
-  list.innerHTML = '<div class="no-entries">Loading entries...</div>';
-  showScreen('history');
-
-  try {
-    const res = await storageAdapter.list(ENTRY_PREFIX);
-    const keys = res && res.keys ? res.keys.sort().reverse() : [];
-
-    if (!keys.length) {
-      list.innerHTML = '<div class="no-entries">No entries yet.<br>Start tonight.</div>';
-      return;
+      window.speechSynthesis.speak(currentSpeech);
     }
 
-    list.innerHTML = '';
-    for (const k of keys) {
-      const r = await storageAdapter.get(k);
-      if (!r || !r.value) continue;
+    function pauseAffirmation() {
+      const statusText = document.getElementById("statusText");
 
-      const e = JSON.parse(r.value);
-      const card = document.createElement('div');
-      card.className = 'entry-card';
-      card.innerHTML =
-        '<div class="entry-main">' +
-          '<div class="entry-date">' + escapeHtml(formatDate(e.date)) + '</div>' +
-          '<div class="entry-row">' +
-            '<div class="entry-type">' + escapeHtml(e.dayType || '—') + '</div>' +
-            '<div class="entry-scores">' +
-              '<span class="score-pill">Day ' + escapeHtml(e.dayScore || '—') + '</span>' +
-              '<span class="score-pill">Energy ' + escapeHtml(e.energyScore || '—') + '</span>' +
-            '</div>' +
-          '</div>' +
-          (e.oneWin ? '<div class="entry-win">' + escapeHtml(e.oneWin) + '</div>' : '') +
-        '</div>' +
-        '<div class="entry-actions"><button class="delete-entry-btn" type="button" onclick="deleteEntry(\'' + escapeHtml(e.date) + '\', event)"><i class="ti ti-trash"></i> Delete entry</button></div>';
-      card.onclick = () => showDetail(e);
-      list.appendChild(card);
+      if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+        window.speechSynthesis.pause();
+        statusText.innerText = "Voice status: Paused";
+      }
     }
 
-    if (!list.children.length) {
-      list.innerHTML = '<div class="no-entries">No readable entries found.</div>';
-    }
-  } catch(e) {
-    list.innerHTML = '<div class="no-entries">Could not load entries.</div>';
-  }
-}
+    function resumeAffirmation() {
+      const statusText = document.getElementById("statusText");
 
-function showDetail(e) {
-  window.currentDetailEntryDate = e.date;
-  document.getElementById('detail-date').textContent = formatDate(e.date);
-  const b = document.getElementById('detail-body');
-  function row(label, val) {
-    if (!val) return '';
-    return '<div class="detail-field"><div class="detail-label">' + escapeHtml(label) + '</div><div class="detail-val">' + escapeHtml(val) + '</div></div>';
-  }
-  b.innerHTML =
-    '<div class="detail-actions"><button class="delete-entry-btn" type="button" onclick="deleteEntryFromDetail()"><i class="ti ti-trash"></i> Delete this entry</button></div>' +
-    '<div style="display:flex;gap:10px;margin-bottom:16px;">' +
-      '<div style="flex:1;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px;text-align:center;">' +
-        '<div style="font-size:11px;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:0.5px;">Day score</div>' +
-        '<div style="font-size:22px;font-weight:500;color:#534AB7;">' + escapeHtml(e.dayScore || '—') + '</div>' +
-      '</div>' +
-      '<div style="flex:1;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px;text-align:center;">' +
-        '<div style="font-size:11px;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:0.5px;">Energy left</div>' +
-        '<div style="font-size:22px;font-weight:500;color:#534AB7;">' + escapeHtml(e.energyScore || '—') + '</div>' +
-      '</div>' +
-    '</div>' +
-    (e.dayType ? '<div style="margin-bottom:14px;"><span class="badge">' + escapeHtml(e.dayType) + '</span></div>' : '') +
-    row('What was on my mind', e.mindDump) +
-    (e.parkText ? row('Parked for tomorrow', e.parkText) : '') +
-    '<div class="detail-divider"></div>' +
-    row('Honest line about today', e.dayLine) +
-    row('Pattern', e.pattern) +
-    row('What triggered it', e.trigger) +
-    '<div class="detail-divider"></div>' +
-    row('One win', e.oneWin) +
-    (e.identity ? row('This proves I am', e.identity) : '') +
-    '<div class="detail-divider"></div>' +
-    row('One thing to correct', e.oneCorrect) +
-    row('How I will correct it', e.howCorrect) +
-    '<div class="detail-divider"></div>' +
-    row("Tomorrow's first move", e.firstMove) +
-    row('What I will avoid', e.avoid) +
-    '<div class="affirmation-box" style="margin-top:16px;"><div class="aff-label">Final night line</div><div class="aff-text">"I closed today. I keep the lesson, not the burden. Tomorrow I will return sharper."</div></div>';
-  showScreen('detail');
-}
-
-
-async function deleteEntry(date, event) {
-  if (event) {
-    event.preventDefault();
-    event.stopPropagation();
-  }
-  if (!date) return;
-  const ok = confirm('Delete the entry for ' + formatDate(date) + '? This cannot be undone.');
-  if (!ok) return;
-  await storageAdapter.remove(ENTRY_PREFIX + date);
-  await updateHome();
-  const active = document.querySelector('.screen.active');
-  if (active && active.id === 'dashboard') {
-    await renderDashboard();
-  } else {
-    await showHistory();
-  }
-}
-
-async function deleteEntryFromDetail() {
-  const date = window.currentDetailEntryDate;
-  await deleteEntry(date, null);
-}
-
-async function getAllEntries() {
-  const res = await storageAdapter.list(ENTRY_PREFIX);
-  const keys = res && res.keys ? res.keys.sort() : [];
-  const entries = [];
-  for (const k of keys) {
-    const r = await storageAdapter.get(k);
-    if (!r || !r.value) continue;
-    try { entries.push(JSON.parse(r.value)); } catch(e) {}
-  }
-  return entries;
-}
-
-function getWeekDates(date = new Date()) {
-  const d = new Date(date);
-  const day = d.getDay();
-  const diff = day === 0 ? -6 : 1 - day;
-  d.setDate(d.getDate() + diff);
-  d.setHours(12,0,0,0);
-  return Array.from({length:7}, (_,i) => {
-    const x = new Date(d);
-    x.setDate(d.getDate()+i);
-    return x;
-  });
-}
-
-function getQuestionConfig(key) {
-  const map = {
-    dayScore: { label:'Day score fluctuation', sub:'Numeric movement of your overall day score across saved entries.', type:'number', getter:e=>Number(e.dayScore || 0) },
-    energyScore: { label:'Energy left fluctuation', sub:'Numeric movement of how much energy you had left at night.', type:'number', getter:e=>Number(e.energyScore || 0) },
-    dayType: { label:'Day type comparison', sub:'Shows what kind of day you selected on each saved date.', type:'text', getter:e=>e.dayType || '' },
-    pattern: { label:'Pattern comparison', sub:'Tracks which behavior pattern appeared across dates.', type:'text', getter:e=>e.pattern || '' },
-    identity: { label:'Identity proof comparison', sub:'Tracks the strengths you claimed as proof of identity.', type:'text', getter:e=>e.identity || '' },
-    oneCorrect: { label:'Correction comparison', sub:'Shows the correction theme you selected each night.', type:'text', getter:e=>e.oneCorrect || '' },
-    firstMove: { label:'First move comparison', sub:'Shows your planned first action for the next day.', type:'text', getter:e=>e.firstMove || '' },
-    avoid: { label:'Avoidance pattern comparison', sub:'Shows what you repeatedly decide to avoid tomorrow.', type:'text', getter:e=>e.avoid || '' },
-    mindDump: { label:'Mind dump comparison', sub:'Shows the mental load written across entries.', type:'text', getter:e=>e.mindDump || '' }
-  };
-  return map[key] || map.dayScore;
-}
-
-function setDashboardQuestion(key) {
-  selectedDashboardQuestion = key;
-  document.querySelectorAll('#question-tabs .q-tab').forEach(btn => {
-    btn.classList.toggle('on', btn.dataset.q === key);
-  });
-  renderDashboard();
-}
-
-function defaultDashboardDates() {
-  const week = getWeekDates();
-  return { from: getLocalDateKey(week[0]), to: getLocalDateKey(week[6]) };
-}
-
-function entryInRange(entry, from, to) {
-  if (!entry || !entry.date) return false;
-  return (!from || entry.date >= from) && (!to || entry.date <= to);
-}
-
-async function showDashboard() {
-  showScreen('dashboard');
-  if (!dashboardInitialized) {
-    const d = defaultDashboardDates();
-    document.getElementById('dash-from').value = d.from;
-    document.getElementById('dash-to').value = d.to;
-    dashboardInitialized = true;
-  }
-  await renderDashboard();
-}
-
-async function renderDashboard() {
-  const entries = await getAllEntries();
-  const from = document.getElementById('dash-from') ? document.getElementById('dash-from').value : '';
-  const to = document.getElementById('dash-to') ? document.getElementById('dash-to').value : '';
-  const filtered = entries.filter(e => entryInRange(e, from, to));
-  const avg = arr => arr.length ? (arr.reduce((a,b)=>a+b,0)/arr.length).toFixed(1) : '—';
-  const dayScores = filtered.map(e => Number(e.dayScore || 0)).filter(Boolean);
-  const energyScores = filtered.map(e => Number(e.energyScore || 0)).filter(Boolean);
-  const streak = await calculateNightStreak();
-
-  document.getElementById('dash-entries').textContent = filtered.length;
-  document.getElementById('dash-avg-day').textContent = avg(dayScores);
-  document.getElementById('dash-avg-energy').textContent = avg(energyScores);
-  document.getElementById('dash-streak').textContent = streak;
-
-  renderQuestionComparison(filtered);
-  renderScoreTimeline(filtered);
-
-  let insight = 'Choose a question button to compare that exact journal field across your saved entries.';
-  if (filtered.length) {
-    const best = filtered.slice().sort((a,b)=>Number(b.dayScore||0)-Number(a.dayScore||0))[0];
-    const lowest = filtered.slice().sort((a,b)=>Number(a.dayScore||0)-Number(b.dayScore||0))[0];
-    insight = '<strong>Range insight:</strong> Highest day score was ' + escapeHtml(best.dayScore || '—') + ' on ' + escapeHtml(formatDate(best.date)) + '. Lowest was ' + escapeHtml(lowest.dayScore || '—') + ' on ' + escapeHtml(formatDate(lowest.date)) + '.';
-  }
-  document.getElementById('dash-insight').innerHTML = insight;
-}
-
-function renderQuestionComparison(entries) {
-  const cfg = getQuestionConfig(selectedDashboardQuestion);
-  document.getElementById('question-title').textContent = cfg.label;
-  document.getElementById('question-sub').textContent = cfg.sub;
-  const out = document.getElementById('question-output');
-  const rows = entries.slice().sort((a,b)=>a.date.localeCompare(b.date));
-  if (!rows.length) {
-    out.innerHTML = '<div class="empty-panel">No entries found for this date range.</div>';
-    return;
-  }
-
-  const values = rows.map(e => cfg.getter(e)).filter(v => cfg.type === 'number' ? Number(v) > 0 : String(v || '').trim());
-  const mini = cfg.type === 'number'
-    ? '<div class="mini-summary"><div class="mini-card"><div class="mini-value">' + (values.length ? Math.max(...values) : '—') + '</div><div class="mini-label">Highest</div></div><div class="mini-card"><div class="mini-value">' + (values.length ? Math.min(...values) : '—') + '</div><div class="mini-label">Lowest</div></div></div>'
-    : '<div class="mini-summary"><div class="mini-card"><div class="mini-value">' + values.length + '</div><div class="mini-label">Filled answers</div></div><div class="mini-card"><div class="mini-value">' + rows.length + '</div><div class="mini-label">Total entries</div></div></div>';
-
-  const html = rows.map(e => {
-    const raw = cfg.getter(e);
-    const hasValue = cfg.type === 'number' ? Number(raw) > 0 : String(raw || '').trim();
-    const label = new Date(e.date + 'T12:00:00').toLocaleDateString('en-IN', { weekday:'short', day:'numeric', month:'short' });
-    const valueText = hasValue ? String(raw) : 'No answer saved for this question.';
-    const bar = cfg.type === 'number' && hasValue ? '<div class="bar-track"><div class="bar-fill" style="width:' + Math.max(Number(raw) * 10, 2) + '%"></div></div>' : '';
-    return '<div class="timeline-row" onclick="showDetailByDate(\'' + escapeHtml(e.date) + '\')">' +
-      '<div class="timeline-top"><div class="timeline-date">' + escapeHtml(label) + '</div><div class="timeline-pill">' + (cfg.type === 'number' && hasValue ? 'Score ' + escapeHtml(raw) : escapeHtml(e.dayType || 'Entry')) + '</div></div>' +
-      bar +
-      '<div class="timeline-value">' + escapeHtml(valueText) + '</div>' +
-    '</div>';
-  }).join('');
-  out.innerHTML = mini + '<div class="timeline-list">' + html + '</div>';
-}
-
-function renderScoreTimeline(entries) {
-  const list = document.getElementById('week-list');
-  list.innerHTML = '';
-  if (!entries.length) {
-    list.innerHTML = '<div class="empty-panel">No saved entries in this range.</div>';
-    return;
-  }
-  entries.slice().sort((a,b)=>a.date.localeCompare(b.date)).forEach(e => {
-    const score = Number(e.dayScore || 0);
-    const energy = Number(e.energyScore || 0);
-    const label = new Date(e.date + 'T12:00:00').toLocaleDateString('en-IN', { weekday:'short', day:'numeric', month:'short' });
-    const type = e.dayType ? e.dayType : 'Entry saved';
-    const row = document.createElement('div');
-    row.className = 'week-row';
-    row.innerHTML =
-      '<div class="week-head"><div class="week-day">' + escapeHtml(label) + '</div><div class="week-score">Day ' + score + ' · Energy ' + energy + '</div></div>' +
-      '<div class="bar-track"><div class="bar-fill" style="width:' + Math.max(score * 10, 2) + '%"></div></div>' +
-      '<div class="week-meta">' + escapeHtml(type) + '</div>';
-    row.onclick = () => showDetail(e);
-    list.appendChild(row);
-  });
-}
-
-async function showDetailByDate(date) {
-  const r = await storageAdapter.get(ENTRY_PREFIX + date);
-  if (!r || !r.value) return;
-  try { showDetail(JSON.parse(r.value)); } catch(e) {}
-}
-
-function formatDate(d) {
-  if (!d) return '';
-  const dt = new Date(d + 'T12:00:00');
-  return dt.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-}
-
-async function calculateNightStreak() {
-  try {
-    const res = await storageAdapter.list(ENTRY_PREFIX);
-    const savedDates = new Set((res && res.keys ? res.keys : []).map(k => k.replace(ENTRY_PREFIX, '')));
-    let streak = 0;
-    const cursor = new Date();
-
-    while (true) {
-      const key = getLocalDateKey(cursor);
-      if (!savedDates.has(key)) break;
-      streak++;
-      cursor.setDate(cursor.getDate() - 1);
+      if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume();
+        statusText.innerText = "Voice status: Reading affirmation...";
+      }
     }
 
-    return streak;
-  } catch (error) {
-    return 0;
-  }
-}
+    function stopAffirmation() {
+      const statusText = document.getElementById("statusText");
 
-async function updateHome() {
-  const now = new Date();
-  const h = now.getHours();
-  const greeting = h < 12 ? 'Good morning.' : h < 17 ? 'Good afternoon.' : 'Good evening.';
-  document.getElementById('home-greeting').textContent = greeting;
-  document.getElementById('home-date').textContent = now.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' });
+      window.speechSynthesis.cancel();
+      statusText.innerText = "Voice status: Stopped";
+    }
+  </script>
 
-  const streak = await calculateNightStreak();
-  document.getElementById('streak-count').textContent = streak;
-}
-
-bootLock();
-</script>
 </body>
 </html>
