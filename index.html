@@ -8,22 +8,27 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
+    rel="stylesheet"
+  >
 
   <style>
     :root {
-      --dark-green: #071c16;
-      --deep-green: #0b2d23;
-      --forest-green: #124234;
-      --soft-green: #1f5c49;
-      --sage: #9fb8a7;
-      --cream: #f5efe2;
-      --gold: #d7b46a;
-      --muted-gold: #bfa25d;
-      --glass: rgba(255, 255, 255, 0.08);
-      --glass-border: rgba(255, 255, 255, 0.14);
-      --text-light: #f8f3e8;
-      --text-muted: #c8d2c9;
+      --bg-dark: #07110d;
+      --bg-green: #0d2118;
+      --card: rgba(255, 255, 255, 0.075);
+      --card-strong: rgba(255, 255, 255, 0.115);
+      --border: rgba(255, 255, 255, 0.14);
+      --border-soft: rgba(202, 236, 192, 0.16);
+      --text-main: #f4f7ef;
+      --text-soft: #c7d4c5;
+      --text-muted: #8fa18e;
+      --green-light: #9cd87f;
+      --green-accent: #78b95d;
+      --green-deep: #183c2b;
+      --cream: #f6f3e8;
+      --shadow: rgba(0, 0, 0, 0.45);
     }
 
     * {
@@ -32,347 +37,544 @@
       box-sizing: border-box;
     }
 
-    body {
-      min-height: 100vh;
-      font-family: "Inter", sans-serif;
-      background:
-        radial-gradient(circle at 15% 10%, rgba(43, 119, 88, 0.45), transparent 32%),
-        radial-gradient(circle at 85% 80%, rgba(215, 180, 106, 0.18), transparent 30%),
-        linear-gradient(135deg, var(--dark-green), var(--deep-green), #03110d);
-      color: var(--text-light);
-      overflow-x: hidden;
-      padding: 34px;
-      position: relative;
+    html {
+      scroll-behavior: smooth;
     }
 
-    .background-animation {
+    body {
+      min-height: 100vh;
+      font-family: "Manrope", sans-serif;
+      background:
+        radial-gradient(circle at 20% 8%, rgba(101, 177, 72, 0.28), transparent 30%),
+        radial-gradient(circle at 80% 25%, rgba(115, 176, 95, 0.16), transparent 28%),
+        radial-gradient(circle at 50% 100%, rgba(95, 150, 83, 0.20), transparent 32%),
+        linear-gradient(145deg, #050c09 0%, #0a1711 46%, #07110d 100%);
+      color: var(--text-main);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent 85%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .background {
       position: fixed;
       inset: 0;
       overflow: hidden;
-      z-index: 0;
       pointer-events: none;
+      z-index: 0;
     }
 
-    .orb {
+    .glow {
       position: absolute;
       border-radius: 999px;
-      filter: blur(2px);
+      filter: blur(12px);
       opacity: 0.35;
-      animation: floatOrb 12s ease-in-out infinite alternate;
+      animation: floatGlow 11s ease-in-out infinite alternate;
     }
 
-    .orb-one {
-      width: 170px;
-      height: 170px;
-      background: rgba(31, 92, 73, 0.55);
-      top: 12%;
+    .glow-1 {
+      width: 260px;
+      height: 260px;
+      background: rgba(112, 196, 83, 0.22);
+      top: 10%;
       left: 7%;
     }
 
-    .orb-two {
-      width: 120px;
-      height: 120px;
-      background: rgba(215, 180, 106, 0.24);
-      bottom: 12%;
-      right: 10%;
+    .glow-2 {
+      width: 180px;
+      height: 180px;
+      background: rgba(180, 230, 150, 0.14);
+      right: 9%;
+      bottom: 14%;
       animation-delay: 2s;
     }
 
-    .orb-three {
-      width: 90px;
-      height: 90px;
-      background: rgba(159, 184, 167, 0.22);
-      top: 55%;
-      left: 4%;
+    .glow-3 {
+      width: 130px;
+      height: 130px;
+      background: rgba(120, 185, 93, 0.14);
+      top: 52%;
+      left: 70%;
       animation-delay: 4s;
     }
 
-    @keyframes floatOrb {
+    @keyframes floatGlow {
       from {
         transform: translate3d(0, 0, 0) scale(1);
       }
 
       to {
-        transform: translate3d(22px, -28px, 0) scale(1.08);
+        transform: translate3d(28px, -24px, 0) scale(1.08);
       }
     }
 
-    .page-shell {
-      width: 100%;
-      max-width: 1180px;
-      min-height: calc(100vh - 68px);
-      margin: 0 auto;
-      position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: 0.9fr 1.35fr;
-      border-radius: 34px;
-      overflow: hidden;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      box-shadow: 0 35px 90px rgba(0, 0, 0, 0.38);
-      backdrop-filter: blur(22px);
+    .leaf {
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      opacity: 0.12;
+      border-radius: 100% 0 100% 0;
+      background: linear-gradient(135deg, rgba(159, 216, 127, 0.75), transparent 68%);
+      transform: rotate(28deg);
+      animation: leafMove 14s ease-in-out infinite alternate;
     }
 
-    .left-panel {
+    .leaf-1 {
+      top: 12%;
+      right: 9%;
+    }
+
+    .leaf-2 {
+      bottom: 5%;
+      left: 6%;
+      width: 280px;
+      height: 280px;
+      transform: rotate(-18deg);
+      animation-delay: 3s;
+    }
+
+    @keyframes leafMove {
+      from {
+        transform: translateY(0) rotate(28deg);
+      }
+
+      to {
+        transform: translateY(-28px) rotate(35deg);
+      }
+    }
+
+    .page {
       position: relative;
-      padding: 56px 44px;
+      z-index: 2;
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 40px;
+    }
+
+    .nav {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 42px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+
+    .logo span:first-child {
+      color: #0b160f;
+      background: var(--green-light);
+      padding: 3px 8px;
+      border-radius: 999px;
+      box-shadow: 0 0 24px rgba(156, 216, 127, 0.28);
+    }
+
+    .logo span:last-child {
+      color: var(--text-main);
+      border: 1px solid rgba(255,255,255,0.28);
+      padding: 2px 7px;
+      border-radius: 999px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      color: var(--text-soft);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .nav-links a {
+      color: inherit;
+      text-decoration: none;
+      opacity: 0.78;
+      transition: 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--green-light);
+      opacity: 1;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 34px;
+      align-items: stretch;
+      margin-bottom: 34px;
+    }
+
+    .hero-copy {
+      min-height: 470px;
+      padding: 56px;
+      border-radius: 34px;
       background:
-        linear-gradient(160deg, rgba(18, 66, 52, 0.96), rgba(7, 28, 22, 0.98)),
-        radial-gradient(circle at top left, rgba(215, 180, 106, 0.18), transparent 38%);
+        linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.035)),
+        radial-gradient(circle at 18% 20%, rgba(154, 216, 127, 0.18), transparent 32%);
+      border: 1px solid var(--border);
+      box-shadow: 0 24px 80px var(--shadow);
+      backdrop-filter: blur(18px);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       overflow: hidden;
-    }
-
-    .left-panel::before {
-      content: "";
-      position: absolute;
-      width: 260px;
-      height: 260px;
-      border: 1px solid rgba(215, 180, 106, 0.22);
-      border-radius: 999px;
-      top: -90px;
-      right: -100px;
-    }
-
-    .left-panel::after {
-      content: "";
-      position: absolute;
-      width: 190px;
-      height: 190px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.05);
-      bottom: -70px;
-      left: -60px;
-    }
-
-    .brand-line {
       position: relative;
-      z-index: 2;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--gold);
+    }
+
+    .hero-copy::after {
+      content: "";
+      position: absolute;
+      right: -85px;
+      bottom: -105px;
+      width: 310px;
+      height: 310px;
+      border: 1px solid rgba(156, 216, 127, 0.18);
+      border-radius: 50%;
+    }
+
+    .eyebrow {
+      width: fit-content;
+      color: var(--green-light);
+      background: rgba(156, 216, 127, 0.08);
+      border: 1px solid rgba(156, 216, 127, 0.20);
+      padding: 9px 14px;
+      border-radius: 999px;
       font-size: 12px;
       font-weight: 800;
-      letter-spacing: 2.4px;
+      letter-spacing: 1.4px;
       text-transform: uppercase;
+      margin-bottom: 28px;
     }
 
-    .brand-line span {
-      width: 34px;
-      height: 1px;
-      background: var(--gold);
-      display: inline-block;
-    }
-
-    .hero-copy {
-      position: relative;
-      z-index: 2;
-      margin-top: 80px;
-    }
-
-    .hero-copy h1 {
-      font-family: "Fraunces", serif;
-      font-size: clamp(42px, 5vw, 68px);
-      line-height: 0.98;
-      letter-spacing: -1.5px;
-      font-weight: 700;
+    h1 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(48px, 7vw, 88px);
+      line-height: 0.92;
+      letter-spacing: -2.4px;
+      max-width: 720px;
       margin-bottom: 24px;
     }
 
     .hero-copy p {
-      max-width: 380px;
-      color: var(--text-muted);
-      font-size: 16px;
+      color: var(--text-soft);
+      max-width: 520px;
+      font-size: 17px;
       line-height: 1.75;
     }
 
-    .ritual-card {
-      position: relative;
-      z-index: 2;
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.13);
-      border-radius: 26px;
-      padding: 24px;
-      margin-top: 54px;
-    }
-
-    .ritual-card h3 {
-      font-size: 15px;
-      color: var(--gold);
-      margin-bottom: 10px;
-      letter-spacing: 0.4px;
-    }
-
-    .ritual-card p {
+    .hero-bottom {
+      display: flex;
+      align-items: center;
+      gap: 18px;
       color: var(--text-muted);
       font-size: 14px;
-      line-height: 1.7;
+      line-height: 1.6;
+      margin-top: 44px;
     }
 
-    .main-panel {
-      padding: 54px;
+    .hero-dot {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
       background:
-        linear-gradient(160deg, rgba(245, 239, 226, 0.09), rgba(255, 255, 255, 0.04)),
-        rgba(7, 28, 22, 0.72);
+        radial-gradient(circle at 35% 30%, #dff8c9, #86cb66 42%, #305c32 75%);
+      box-shadow: 0 0 36px rgba(156, 216, 127, 0.25);
+      flex: 0 0 auto;
+    }
+
+    .plant-card {
+      border-radius: 34px;
+      background:
+        linear-gradient(160deg, rgba(255,255,255,0.11), rgba(255,255,255,0.035)),
+        radial-gradient(circle at 50% 15%, rgba(156,216,127,0.30), transparent 30%);
+      border: 1px solid var(--border);
+      box-shadow: 0 24px 80px var(--shadow);
+      backdrop-filter: blur(18px);
+      padding: 32px;
+      min-height: 470px;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .plant-visual {
+      position: relative;
+      height: 285px;
+      display: flex;
+      align-items: center;
       justify-content: center;
-      gap: 24px;
     }
 
-    .top-label {
-      color: var(--gold);
-      font-size: 12px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 10px;
+    .plant-pot {
+      position: absolute;
+      bottom: 16px;
+      width: 112px;
+      height: 92px;
+      border-radius: 44% 44% 50% 50%;
+      background:
+        linear-gradient(90deg, #d8c48e, #f5edc7 48%, #b9a369);
+      box-shadow: 0 18px 34px rgba(0,0,0,0.28);
     }
 
-    .main-heading {
-      font-family: "Fraunces", serif;
-      font-size: clamp(30px, 4vw, 44px);
-      line-height: 1.1;
-      letter-spacing: -0.8px;
-      margin-bottom: 8px;
+    .plant-pot::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: repeating-linear-gradient(
+        90deg,
+        rgba(255,255,255,0.12) 0,
+        rgba(255,255,255,0.12) 3px,
+        transparent 3px,
+        transparent 9px
+      );
     }
 
-    .sub-heading {
-      color: var(--text-muted);
-      font-size: 15px;
-      line-height: 1.65;
-      max-width: 620px;
+    .leaf-cluster {
+      position: absolute;
+      width: 210px;
+      height: 210px;
+      top: 22px;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
-    .affirmation-card,
-    .voice-card {
-      background: rgba(255, 255, 255, 0.075);
-      border: 1px solid var(--glass-border);
-      border-radius: 30px;
-      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.22);
-      backdrop-filter: blur(16px);
+    .plant-leaf {
+      position: absolute;
+      width: 95px;
+      height: 45px;
+      border-radius: 100% 0 100% 0;
+      background: linear-gradient(135deg, #baf285, #5dae45 58%, #275f32);
+      transform-origin: bottom right;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.22);
     }
 
-    .affirmation-card {
-      padding: 30px;
-    }
+    .plant-leaf:nth-child(1) { left: 56px; top: 14px; transform: rotate(-82deg); }
+    .plant-leaf:nth-child(2) { left: 82px; top: 30px; transform: rotate(-34deg); }
+    .plant-leaf:nth-child(3) { left: 24px; top: 54px; transform: rotate(-132deg); }
+    .plant-leaf:nth-child(4) { left: 88px; top: 78px; transform: rotate(8deg); }
+    .plant-leaf:nth-child(5) { left: 44px; top: 91px; transform: rotate(-178deg); }
+    .plant-leaf:nth-child(6) { left: 72px; top: 115px; transform: rotate(-60deg); }
+    .plant-leaf:nth-child(7) { left: 110px; top: 108px; transform: rotate(38deg); }
+    .plant-leaf:nth-child(8) { left: 9px; top: 118px; transform: rotate(-148deg); }
 
-    .card-title {
+    .plant-action {
+      background: rgba(255,255,255,0.88);
+      color: #1b281f;
+      border-radius: 22px;
+      padding: 18px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 18px;
-    }
-
-    .card-title h2 {
-      font-family: "Fraunces", serif;
-      font-size: 28px;
-      font-weight: 600;
-      letter-spacing: -0.4px;
-    }
-
-    .small-badge {
-      color: var(--gold);
-      border: 1px solid rgba(215, 180, 106, 0.35);
-      border-radius: 999px;
-      padding: 8px 12px;
-      font-size: 12px;
+      gap: 12px;
       font-weight: 800;
+      box-shadow: 0 22px 46px rgba(0,0,0,0.22);
+    }
+
+    .plant-action span:last-child {
+      font-size: 24px;
+      transform: rotate(-35deg);
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .affirmation-card,
+    .voice-card,
+    .ritual-card {
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.105), rgba(255,255,255,0.045));
+      border: 1px solid var(--border);
+      border-radius: 34px;
+      box-shadow: 0 22px 70px rgba(0,0,0,0.34);
+      backdrop-filter: blur(18px);
+    }
+
+    .affirmation-card {
+      padding: 34px;
+    }
+
+    .card-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .card-heading h2 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(30px, 4vw, 44px);
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+
+    .badge {
+      color: #0d1b13;
+      background: var(--green-light);
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-size: 12px;
+      font-weight: 900;
       white-space: nowrap;
-      background: rgba(215, 180, 106, 0.08);
     }
 
     .affirmation-space {
-      min-height: 330px;
-      border-radius: 24px;
-      padding: 28px;
+      min-height: 500px;
+      width: 100%;
+      border-radius: 28px;
+      padding: 30px;
       outline: none;
       color: var(--cream);
       background:
-        linear-gradient(180deg, rgba(3, 17, 13, 0.62), rgba(7, 28, 22, 0.74));
-      border: 1.4px dashed rgba(215, 180, 106, 0.38);
-      font-size: 19px;
-      line-height: 1.9;
+        radial-gradient(circle at 90% 10%, rgba(156,216,127,0.09), transparent 24%),
+        linear-gradient(180deg, rgba(4, 13, 9, 0.70), rgba(8, 25, 17, 0.85));
+      border: 1px dashed rgba(156, 216, 127, 0.32);
+      font-size: 18px;
+      line-height: 1.95;
       white-space: pre-line;
       transition: 0.25s ease;
     }
 
     .affirmation-space:focus {
-      border-color: rgba(215, 180, 106, 0.8);
-      box-shadow: 0 0 0 4px rgba(215, 180, 106, 0.09);
-      background:
-        linear-gradient(180deg, rgba(3, 17, 13, 0.72), rgba(7, 28, 22, 0.86));
+      border-color: rgba(156, 216, 127, 0.82);
+      box-shadow: 0 0 0 4px rgba(156, 216, 127, 0.08);
     }
 
     .hint {
-      margin-top: 14px;
+      margin-top: 16px;
       color: var(--text-muted);
       font-size: 13px;
       line-height: 1.6;
     }
 
+    .side-column {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
     .voice-card {
-      padding: 28px;
+      padding: 30px;
     }
 
-    .voice-card h3 {
-      font-family: "Fraunces", serif;
-      font-size: 25px;
-      margin-bottom: 8px;
+    .voice-card h3,
+    .ritual-card h3 {
+      font-family: "Playfair Display", serif;
+      font-size: 32px;
+      letter-spacing: -0.6px;
+      line-height: 1.05;
+      margin-bottom: 12px;
     }
 
-    .voice-card p {
-      color: var(--text-muted);
+    .voice-card p,
+    .ritual-card p {
+      color: var(--text-soft);
       font-size: 14px;
-      line-height: 1.65;
+      line-height: 1.7;
+      margin-bottom: 22px;
+    }
+
+    .select-wrap {
+      position: relative;
       margin-bottom: 18px;
     }
 
     .voice-label {
       display: block;
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--gold);
-      margin-bottom: 8px;
+      color: var(--green-light);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 1.3px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .select-wrap::after {
+      content: "⌄";
+      position: absolute;
+      right: 18px;
+      bottom: 17px;
+      color: var(--green-light);
+      font-size: 22px;
+      line-height: 1;
+      pointer-events: none;
     }
 
     .voice-select {
+      appearance: none;
+      -webkit-appearance: none;
       width: 100%;
-      padding: 14px 16px;
-      border-radius: 16px;
-      border: 1px solid rgba(215, 180, 106, 0.32);
-      background: rgba(3, 17, 13, 0.55);
-      color: var(--cream);
+      min-height: 58px;
+      padding: 0 52px 0 18px;
+      border-radius: 20px;
+      border: 1px solid rgba(156, 216, 127, 0.24);
+      background:
+        linear-gradient(145deg, rgba(8, 25, 17, 0.92), rgba(20, 55, 38, 0.74));
+      color: var(--text-main);
+      font-family: "Manrope", sans-serif;
       font-size: 14px;
-      margin-bottom: 18px;
+      font-weight: 700;
       outline: none;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.08),
+        0 16px 32px rgba(0,0,0,0.20);
+      cursor: pointer;
     }
 
     .voice-select:focus {
-      border-color: rgba(215, 180, 106, 0.8);
-      box-shadow: 0 0 0 4px rgba(215, 180, 106, 0.09);
+      border-color: rgba(156, 216, 127, 0.78);
+      box-shadow:
+        0 0 0 4px rgba(156, 216, 127, 0.08),
+        0 16px 32px rgba(0,0,0,0.20);
+    }
+
+    .voice-select option {
+      color: #07110d;
+      background: #eef8e6;
+      font-weight: 700;
     }
 
     .button-row {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
     }
 
     button {
+      min-height: 54px;
       border: none;
-      padding: 14px 22px;
-      border-radius: 999px;
+      border-radius: 18px;
+      padding: 14px 18px;
+      font-family: "Manrope", sans-serif;
       font-size: 14px;
-      font-weight: 800;
+      font-weight: 900;
       cursor: pointer;
       transition: 0.25s ease;
-      font-family: "Inter", sans-serif;
     }
 
     button:hover {
@@ -380,86 +582,199 @@
     }
 
     .listen-btn {
-      background: linear-gradient(135deg, var(--gold), #f0d58b);
-      color: #10281f;
-      box-shadow: 0 16px 34px rgba(215, 180, 106, 0.24);
+      grid-column: 1 / -1;
+      color: #07110d;
+      background: linear-gradient(135deg, #bff39a, #79bd5c);
+      box-shadow: 0 16px 34px rgba(119, 188, 91, 0.22);
     }
 
     .pause-btn,
     .resume-btn {
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--cream);
-      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: var(--text-main);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
     }
 
     .stop-btn {
-      background: rgba(3, 17, 13, 0.92);
-      color: var(--cream);
-      border: 1px solid rgba(215, 180, 106, 0.22);
+      grid-column: 1 / -1;
+      color: var(--text-main);
+      background: rgba(4, 11, 8, 0.82);
+      border: 1px solid rgba(156, 216, 127, 0.20);
     }
 
     .status-text {
       margin-top: 16px;
-      font-size: 13px;
-      color: var(--sage);
-      line-height: 1.5;
-    }
-
-    .bottom-reminder {
-      text-align: center;
       color: var(--text-muted);
       font-size: 13px;
       line-height: 1.6;
     }
 
-    @media (max-width: 940px) {
-      body {
-        padding: 18px;
+    .ritual-card {
+      padding: 30px;
+    }
+
+    .mini-stat {
+      display: grid;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .stat-box {
+      min-height: 78px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.075);
+      border: 1px solid rgba(255,255,255,0.10);
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .stat-box strong {
+      font-size: 26px;
+      color: var(--text-main);
+    }
+
+    .stat-box span {
+      color: var(--text-soft);
+      font-size: 13px;
+      line-height: 1.4;
+      text-align: right;
+    }
+
+    .footer-note {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.6;
+      padding: 26px 0 0;
+    }
+
+    @media (max-width: 960px) {
+      .nav {
+        margin-bottom: 24px;
       }
 
-      .page-shell {
+      .nav-links {
+        display: none;
+      }
+
+      .hero,
+      .content-grid {
         grid-template-columns: 1fr;
+      }
+
+      .hero-copy,
+      .plant-card {
         min-height: auto;
       }
 
-      .left-panel {
-        padding: 38px 28px;
-      }
-
       .hero-copy {
-        margin-top: 52px;
+        padding: 36px 26px;
       }
 
-      .ritual-card {
-        margin-top: 34px;
+      .plant-card {
+        padding: 26px;
       }
 
-      .main-panel {
-        padding: 34px 24px;
+      .plant-visual {
+        height: 250px;
       }
 
       .affirmation-card,
-      .voice-card {
-        border-radius: 24px;
+      .voice-card,
+      .ritual-card {
+        border-radius: 28px;
       }
 
       .affirmation-card {
-        padding: 22px;
+        padding: 24px;
       }
 
       .affirmation-space {
-        min-height: 300px;
-        padding: 22px;
+        min-height: 430px;
+        padding: 24px;
         font-size: 17px;
       }
+    }
 
-      .card-title {
+    @media (max-width: 560px) {
+      .page {
+        width: min(100% - 22px, 1180px);
+        padding-top: 16px;
+      }
+
+      .hero {
+        gap: 18px;
+        margin-bottom: 18px;
+      }
+
+      .content-grid {
+        gap: 18px;
+      }
+
+      .hero-copy {
+        border-radius: 28px;
+      }
+
+      h1 {
+        font-size: 50px;
+      }
+
+      .hero-copy p {
+        font-size: 15px;
+      }
+
+      .hero-bottom {
+        align-items: flex-start;
+      }
+
+      .plant-card {
+        display: none;
+      }
+
+      .card-heading {
+        flex-direction: column;
+      }
+
+      .badge {
+        width: fit-content;
+      }
+
+      .affirmation-space {
+        min-height: 420px;
+        border-radius: 22px;
+        padding: 20px;
+        font-size: 16px;
+        line-height: 1.85;
+      }
+
+      .voice-card,
+      .ritual-card {
+        padding: 24px;
+      }
+
+      .button-row {
+        grid-template-columns: 1fr;
+      }
+
+      .listen-btn,
+      .stop-btn {
+        grid-column: auto;
+      }
+
+      button {
+        width: 100%;
+      }
+
+      .stat-box {
         align-items: flex-start;
         flex-direction: column;
       }
 
-      .small-badge {
-        white-space: normal;
+      .stat-box span {
+        text-align: left;
       }
     }
   </style>
@@ -467,50 +782,76 @@
 
 <body>
 
-  <div class="background-animation">
-    <div class="orb orb-one"></div>
-    <div class="orb orb-two"></div>
-    <div class="orb orb-three"></div>
+  <div class="background">
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    <div class="glow glow-3"></div>
+    <div class="leaf leaf-1"></div>
+    <div class="leaf leaf-2"></div>
   </div>
 
-  <div class="page-shell">
+  <div class="page">
 
-    <aside class="left-panel">
-      <div class="brand-line">
-        <span></span>
-        Identity Ritual
+    <nav class="nav">
+      <div class="logo">
+        <span>Green</span>
+        <span>Ritual</span>
       </div>
 
+      <div class="nav-links">
+        <a href="#affirmation">Affirmation</a>
+        <a href="#voice">Voice</a>
+        <a href="#ritual">Ritual</a>
+      </div>
+    </nav>
+
+    <section class="hero">
       <div class="hero-copy">
-        <h1>Read.<br>Listen.<br>Become.</h1>
-        <p>
-          A private affirmation space designed for calm focus, masculine identity,
-          emotional discipline, and daily inner alignment.
-        </p>
+        <div>
+          <div class="eyebrow">Daily Identity Practice</div>
+          <h1>Read.<br>Listen.<br>Become.</h1>
+          <p>
+            A private affirmation space designed to help you build calm presence,
+            emotional discipline, masculine confidence, and a stronger inner identity.
+          </p>
+        </div>
+
+        <div class="hero-bottom">
+          <div class="hero-dot"></div>
+          <div>
+            Best used in the morning before phone, social media, or external noise.
+          </div>
+        </div>
       </div>
 
-      <div class="ritual-card">
-        <h3>Best Reading Time</h3>
-        <p>
-          Use this before social media, before external noise, and before the day starts controlling your attention.
-        </p>
+      <div class="plant-card" aria-hidden="true">
+        <div class="plant-visual">
+          <div class="leaf-cluster">
+            <div class="plant-leaf"></div>
+            <div class="plant-leaf"></div>
+            <div class="plant-leaf"></div>
+            <div class="plant-leaf"></div>
+            <div class="plant-leaf"></div>
+            <div class="plant-leaf"></div>
+            <div class="plant-leaf"></div>
+            <div class="plant-leaf"></div>
+          </div>
+          <div class="plant-pot"></div>
+        </div>
+
+        <div class="plant-action">
+          <span>Open your inner ritual</span>
+          <span>↗</span>
+        </div>
       </div>
-    </aside>
+    </section>
 
-    <main class="main-panel">
+    <section class="content-grid">
 
-      <section>
-        <div class="top-label">Daily Affirmation Practice</div>
-        <h2 class="main-heading">Your personal affirmation reading page</h2>
-        <p class="sub-heading">
-          Write your affirmation once. Read it slowly. Listen to it daily. Let repetition turn words into identity.
-        </p>
-      </section>
-
-      <section class="affirmation-card">
-        <div class="card-title">
+      <div class="affirmation-card" id="affirmation">
+        <div class="card-heading">
           <h2>My Affirmation</h2>
-          <div class="small-badge">Editable Space</div>
+          <div class="badge">Editable Space</div>
         </div>
 
         <div class="affirmation-space" id="affirmationText" contenteditable="true">
@@ -530,39 +871,70 @@ Every day, I become more aligned with my highest identity.
         </div>
 
         <p class="hint">
-          Click inside this box and replace the text with your own affirmation whenever needed.
+          Click inside this box and replace the text with your own affirmation.
         </p>
-      </section>
+      </div>
 
-      <section class="voice-card">
-        <h3>Listen to Affirmation</h3>
-        <p>
-          This uses your browser’s built-in voices. Select the best available feminine or soft voice from the dropdown.
-          For truly natural voice, you will need an AI-generated MP3 later.
-        </p>
+      <div class="side-column">
 
-        <label class="voice-label" for="voiceSelect">Choose Voice</label>
-        <select id="voiceSelect" class="voice-select">
-          <option>Loading voices...</option>
-        </select>
+        <div class="voice-card" id="voice">
+          <h3>Listen to Affirmation</h3>
+          <p>
+            Choose the softest available system voice. Browser voices may still sound robotic,
+            but this selector gives you better control.
+          </p>
 
-        <div class="button-row">
-          <button class="listen-btn" onclick="speakAffirmation()">Listen</button>
-          <button class="pause-btn" onclick="pauseAffirmation()">Pause</button>
-          <button class="resume-btn" onclick="resumeAffirmation()">Resume</button>
-          <button class="stop-btn" onclick="stopAffirmation()">Stop</button>
+          <div class="select-wrap">
+            <label class="voice-label" for="voiceSelect">Choose Voice</label>
+            <select id="voiceSelect" class="voice-select">
+              <option>Loading voices...</option>
+            </select>
+          </div>
+
+          <div class="button-row">
+            <button class="listen-btn" onclick="speakAffirmation()">Listen</button>
+            <button class="pause-btn" onclick="pauseAffirmation()">Pause</button>
+            <button class="resume-btn" onclick="resumeAffirmation()">Resume</button>
+            <button class="stop-btn" onclick="stopAffirmation()">Stop</button>
+          </div>
+
+          <div class="status-text" id="statusText">
+            Voice status: Ready
+          </div>
         </div>
 
-        <div class="status-text" id="statusText">
-          Voice status: Ready
+        <div class="ritual-card" id="ritual">
+          <h3>Daily Ritual</h3>
+          <p>
+            Keep the practice short, repeatable, and emotionally focused. The goal is not just reading;
+            the goal is identity installation.
+          </p>
+
+          <div class="mini-stat">
+            <div class="stat-box">
+              <strong>3x</strong>
+              <span>Read slowly before starting your day</span>
+            </div>
+
+            <div class="stat-box">
+              <strong>5 min</strong>
+              <span>Enough for one focused affirmation session</span>
+            </div>
+
+            <div class="stat-box">
+              <strong>30 days</strong>
+              <span>Repeat until the words feel natural</span>
+            </div>
+          </div>
         </div>
-      </section>
 
-      <p class="bottom-reminder">
-        Read slowly. Listen with attention. Repeat daily until the statement becomes your natural behaviour.
-      </p>
+      </div>
 
-    </main>
+    </section>
+
+    <p class="footer-note">
+      Read slowly. Listen with attention. Repeat daily until the statement becomes your natural behaviour.
+    </p>
 
   </div>
 
@@ -578,7 +950,7 @@ Every day, I become more aligned with my highest identity.
 
       if (!availableVoices.length) {
         const option = document.createElement("option");
-        option.textContent = "No voices found yet. Try refreshing the page.";
+        option.textContent = "No voices found yet. Refresh the page.";
         voiceSelect.appendChild(option);
         return;
       }
@@ -588,7 +960,8 @@ Every day, I become more aligned with my highest identity.
         const voiceName = voice.name.toLowerCase();
 
         option.value = index;
-        option.textContent = voice.name + " — " + voice.lang;
+
+        let label = voice.name + " — " + voice.lang;
 
         if (
           voiceName.includes("female") ||
@@ -602,9 +975,10 @@ Every day, I become more aligned with my highest identity.
           voiceName.includes("aria") ||
           voiceName.includes("jenny")
         ) {
-          option.textContent = "Recommended: " + option.textContent;
+          label = "Recommended: " + label;
         }
 
+        option.textContent = label;
         voiceSelect.appendChild(option);
       });
 
@@ -677,8 +1051,8 @@ Every day, I become more aligned with my highest identity.
         currentSpeech.lang = "en-IN";
       }
 
-      currentSpeech.rate = 0.78;
-      currentSpeech.pitch = 1.05;
+      currentSpeech.rate = 0.76;
+      currentSpeech.pitch = 1.06;
       currentSpeech.volume = 1;
 
       currentSpeech.onstart = function () {
